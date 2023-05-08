@@ -240,9 +240,7 @@ const botNumber = anita.user.id.split(':')[0]+'@s.whatsapp.net'
 const args = body.trim().split(/ +/).slice(1);
 const text = args.join(" ")
 
-const reply = (text) => {
-  client.sendMessage(from, {text: text}, {quoted: info})
-}
+
 //OJO SI NO DA BORRALA//
 
 const enviarfiguimg = async (jid, path, quoted, options = {}) => {
@@ -531,16 +529,19 @@ case 'hola':
   enviartexto('Que tal en que andas✌😃')
   break
 
-  case 'Como estas':
-    case 'como estas':
-      case 'bot estas bien?':
-        case '¿bot estas bien?':
-          enviartexto('si muy bien y tu?')
+  case 'Comoestas':
+    case 'comoestas':
+      case 'botestasbien?':
+        case '¿botestasbien?':
+          const animo = ('si muy bien y tu?','obvio mi king estoy muy bien','la verdad no se','estoy nice y tu?','no se')
+          const estasbien1 = Math.floor(Math.random()*animo.length)
+  const estasbien= animo[estasbien1]
+  enviartexto(estasbien)
           break
 
           case "playvideo":
             reply("aguarde um minuto")
-            bla = await fetchJson(`https://api-team-of-hero.herokuapp.com/api/yt/playmp4?apikey=apiteam&query=${q}`) 
+            bla = await fetchJson(`https://trevorestapi.onrender.com/api/download/ytmp4?url=https://www.youtube.com/watch?v=7AlAYttGnAg&apikey=clover=${q}`) 
             audbla = await getBuffer(bla.url)
             anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
              {quoted: live}).catch(e => {
@@ -548,7 +549,24 @@ case 'hola':
             })
             break    
             
-          
+            case "infogp":
+              if (!isGroup) return enviar(respuesta.grupo)
+              if (!isBotGroupAdmins) return enviar(respuesta.botadm)
+              enviar(`
+              ╭─────────────◆ 
+              ┃✯----�𝑰𝑵𝑭𝑶 𝑮𝑹𝑼𝑷𝑶�----⦿
+              ┃ ✯╭──────────◆
+              ┃ ✯│▢𝑁𝑂𝑀𝐵𝑅𝐸: ${groupName}
+              ┃ ✯│▢𝐷𝐸𝑆𝐶𝑅𝐼𝑃𝐶𝐼𝑂𝑁: ${groupDesc}
+              ┃ ✯│▢𝐼𝐷: ${from}
+              ┃ ✯│▢𝐹𝐸𝐶𝐻𝐴: ${colom}
+              ┃ ✯│▢𝐻𝑂𝑅𝐴: ${hora}
+              ┃ ✯╰───────────◆
+              ╰━━━━━━━━━━━──⊷
+              `)
+              break
+
+              //IMAGENES//
             
             case 'loli' :{
             waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/loli?apikey=clover')
@@ -586,6 +604,183 @@ case 'hola':
             anita.sendMessage(from, templateMassage)
             }
             break
+
+            case 'wallpaperaesthetic':{
+              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/wallpaper/aesthetic?apikey=clover')
+              templateMassage = {
+              image: {url:waifuddd.data.url,
+              quoted: info},
+              caption: 'wallpaper!',
+              footer: "ꪶ͓Ckev",
+              }
+              anita.sendMessage(from, templateMassage)
+              }
+              break
+
+              case 'wallpaperanime':{
+                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/anime?apikey=clover')
+                templateMassage = {
+                image: {url:waifuddd.data.url,
+                quoted: info},
+                caption: 'wallpaper!',
+                footer: "ꪶ͓Ckev",
+                }
+                anita.sendMessage(from, templateMassage)
+                }
+                break
+
+                case 'wallpapergamer':{
+                  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/wallpaper/gaming?apikey=clover')
+                  templateMassage = {
+                  image: {url:waifuddd.data.url,
+                  quoted: info},
+                  caption: 'wallpaper!',
+                  footer: "ꪶ͓Ckev",
+                  }
+                  anita.sendMessage(from, templateMassage)
+                  }
+                  break
+
+  //NSFW
+  case 'loli':
+  case 'nsfwloli':{
+    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/nsfwloli?apikey=clover')
+    templateMassage = {
+    image: {url:waifuddd.data.url,
+    quoted: info},
+    caption: 'LOLI encerio?!',
+    footer: "ꪶ͓Ckev",
+    }
+    anita.sendMessage(from, templateMassage)
+    }
+    break
+
+    case 'neko':
+    case 'nsfwneko':{
+      waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/neko?apikey=clover')
+      templateMassage = {
+      image: {url:waifuddd.data.url,
+      quoted: info},
+      caption: 'Neko!',
+      footer: "ꪶ͓Ckev",
+      }
+      anita.sendMessage(from, templateMassage)
+      }
+      break
+
+      case 'ahegao' :
+      case 'nsfwahegao':{
+        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/ahegao?apikey=clover')
+        templateMassage = {
+        image: {url:waifuddd.data.url,
+        quoted: info},
+        caption: 'mmm!',
+        footer: "ꪶ͓Ckev",
+        }
+        anita.sendMessage(from, templateMassage)
+        }
+        break
+ 
+        case 'pussy':
+        case 'nsfwpussy':{
+          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/pussy?apikey=clover')
+          templateMassage = {
+          image: {url:waifuddd.data.url,
+          quoted: info},
+          caption: 'pussy?!',
+          footer: "ꪶ͓Ckev",
+          }
+          anita.sendMessage(from, templateMassage)
+          }
+          break
+
+         case 'ero':
+          case 'nsfwero':{
+            waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/ero?apikey=clover')
+            templateMassage = {
+            image: {url:waifuddd.data.url,
+            quoted: info},
+            caption: 'ta bien!',
+            footer: "ꪶ͓Ckev",
+            }
+            anita.sendMessage(from, templateMassage)
+            }
+            break
+
+            case 'cum':
+            case 'nsfwcum':{
+              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/cum?apikey=clover')
+              templateMassage = {
+              image: {url:waifuddd.data.url,
+              quoted: info},
+              caption: 'cum?!',
+              footer: "ꪶ͓Ckev",
+              }
+              anita.sendMessage(from, templateMassage)
+              }
+              break
+
+              case 'orgy':
+              case 'nsfworgy':{
+                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/orgy?apikey=clover')
+                templateMassage = {
+                image: {url:waifuddd.data.url,
+                quoted: info},
+                caption: 'xd!',
+                footer: "ꪶ͓Ckev",
+                }
+                anita.sendMessage(from, templateMassage)
+                }
+                break
+
+                case 'bdsm' :
+                case 'nsfwbdsm':{
+                  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/bdsm?apikey=clover')
+                  templateMassage = {
+                  image: {url:waifuddd.data.url,
+                  quoted: info},
+                  caption: ':v!',
+                  footer: "ꪶ͓Ckev",
+                  }
+                  anita.sendMessage(from, templateMassage)
+                  }
+                  break
+
+                  case 'yuri':
+                  case 'nsfwyuri':{
+                    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/yuri?apikey=clover')
+                    templateMassage = {
+                    image: {url:waifuddd.data.url,
+                    quoted: info},
+                    caption: 'hay esta!',
+                    footer: "ꪶ͓Ckev",
+                    }
+                    anita.sendMessage(from, templateMassage)
+                    }
+                    break
+
+                  case 'hentai' :
+                  case 'nsfwhentai':{
+                    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/hentai?apikey=clover')
+                    templateMassage = {
+                    image: {url:waifuddd.data.url,
+                    quoted: info},
+                    caption: 'rico!',
+                    footer: "ꪶ͓Ckev",
+                    }
+                    anita.sendMessage(from, templateMassage)
+                    }
+                    break
+        
+  
+
+
+
+
+
+
+
+
 
 
 
@@ -634,27 +829,65 @@ case 'hola':
 
   const kev = `
 
-   usuario: ${pushname}
+  ╭─────────────◆ 
+  ┃ ✯〘𝒜𝒩𝐼𝒯𝒜-𝐵𝒪𝒯〙
+  ┃ ✯╭──────────◆
+  ┃ ✯│▢ʜᴏʟᴀ:${pushname}
+  ┃ ✯│▢ᴏᴡɴᴇʀ:ᴏғᴄ➟kev
+  ┃ ✯│▢ɴᴜᴍᴇʀᴏ:Wa.me/573001382233
+  ┃ ✯│▢ғᴇᴄʜᴀ:${colom}, ${hora}
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
   
-  -----------------
-      ✨Menu✨
+  
+  ╭─────────────◆ 
+  ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
+  ┃ ✯╭──────────◆
+  ┃ ✯│▢𝕄𝔼ℕ𝕌
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  ╭─────────────◆ 
+  ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
+  ┃ ✯╭──────────◆
+  ┃ ✯│▢${prefix} menu
+  ┃ ✯│▢${prefix} hola
+  ┃ ✯│▢${prefix} welcome
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  ╭─────────────◆ 
+  ┃✯- 𝕀𝕄𝔸𝔾𝔼ℕ𝔼𝕊
+  ┃ ✯╭──────────◆
+  ┃ ✯│${prefix} waifu
+  ┃ ✯│${prefix} waifu2
+  ┃ ✯│${prefix} loli
+  ┃ ✯│${prefix} neko
+  ┃ ✯│${prefix} wallpaperanime
+  ┃ ✯│${prefix} wallpaperaesthetic
+  ┃ ✯│${prefix} wallpapergameri
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  ----------------- 
+  ╭─────────────◆ 
+  ┃✯- ℕ𝕊𝔽𝕎
+  ┃ ✯╭──────────◆
+  ┃ ✯│𝔼𝕁𝔼𝕄ℙ𝕃𝕆 (.nsfwero)
+  ┃ ✯│${prefix} ahegao
+  ┃ ✯│${prefix} ass
+  ┃ ✯│${prefix} loli
+  ┃ ✯│${prefix} neko
+  ┃ ✯│${prefix} pussy
+  ┃ ✯│${prefix} yuri
+  ┃ ✯│${prefix} ero
+  ┃ ✯│${prefix} bdsm
+  ┃ ✯│${prefix} orgy
+  ┃ ✯│${prefix} cum
+  ┃ ✯│${prefix} hentai
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  ╭─────────────◆ 
+  ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
+  ╰━━━━━━━━━━━──⊷
 
- Dia: ${colom}\n\nHora: ${hora}
-  ----------------- 
-  ${prefix} menu
-  ${prefix} fotoleg
-  ${prefix} hola
-  ${prefix} welcome
-
-  IMAGENES 
-  ${prefix} waifu
-  ${prefix} waifu2
-  ${prefix} loli
-  ${prefix} neko
-  ${prefix} playvideo
-  ----------------- 
-    ${NombreBot}
-  ----------------- 
 
   `
 enviarimagencap(good3,kev)

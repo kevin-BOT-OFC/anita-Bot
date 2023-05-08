@@ -239,7 +239,7 @@ const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
 const botNumber = anita.user.id.split(':')[0]+'@s.whatsapp.net'
 const args = body.trim().split(/ +/).slice(1);
 const text = args.join(" ")
-
+const antilink = JSON.parse(fs.readFileSync('./archivos/antilink.json'))
 
 //OJO SI NO DA BORRALA//
 
@@ -397,6 +397,7 @@ if(budy == `${prefix}`) {
 enviar('🤔👍')}
 
 //=====\\
+
 
 // RESPUESTAS POR COMANDOS \\
 respuesta = {
@@ -631,6 +632,7 @@ enviar(respuesta.erro)
 }
 break
 
+
 case "promover":
 if (!isGroup) return enviar(respuesta.grupos)
 if (!isGroupAdmins) return enviar(respuesta.admin)
@@ -680,11 +682,11 @@ case 'antilink':
             if (Number(args[0]) === 1) {
               if (isAntiLink) return enviar('Anti-Link está activo')
               antilink.push(from)
-              fs.writeFileSync('./arquivos/antilink.json', JSON.stringify(antilink))
+              fs.writeFileSync('./archivos/antilink.json', JSON.stringify(antilink))
               enviar('Anti-link estaba activo en el grupo ✔️')
             } else if (Number(args[0]) === 0) {			
               antilink.splice(from, 1)
-              fs.writeFileSync('./arquivos/antilink.json', JSON.stringify(antilink))
+              fs.writeFileSync('./archivos/antilink.json', JSON.stringify(antilink))
               enviar('El antilink se ha deshabilitado correctamente en este grupo✔️')
             } else {
               enviar('1 para activar, 0 para desactivar ')
@@ -779,8 +781,203 @@ case 'antilink':
                   }
                   break
 
+                  //stickers//
+                  case 'sticker': case 's': case 'stickergif': case 'sgif': case 'f': case 'figu': {
+                    function TelegraPh (Path) {
+                      return new Promise (async (resolve, reject) => {
+                        if (!fs.existsSync(Path)) return reject(new Error("File not Found"))
+                        try {
+                          const form = new BodyForm();
+                          form.append("file", fs.createReadStream(Path))
+                          const data = await  axios({
+                            url: "https://telegra.ph/upload",
+                            method: "POST",
+                            headers: {
+                              ...form.getHeaders()
+                            },
+                            data: form
+                          })
+                          return resolve("https://telegra.ph" + data.data[0].src) 
+                          } catch (err) { return reject(new Error(String(err)))}})}
+                    
+                    module.exports = { TelegraPh }
+                    const getRandom = (ext) => {
+                      return `${Math.floor(Math.random() * 10000)}${ext}`
+                    }
+                    async function videoToWebp (media) {
+                    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.mp4`)
+                    fs.writeFileSync(tmpFileIn, media)
+                    await new Promise((resolve, reject) => {
+                      ff(tmpFileIn)
+                      .on("error", reject)
+                      .on("end", () => resolve(true))
+                      .addOutputOptions([
+                       "-vcodec",
+                       "libwebp",
+                       "-vf",
+                       "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse",
+                       "-loop",
+                       "0",
+                       "-ss",
+                       "00:00:00",
+                       "-t",
+                       "00:00:05",
+                       "-preset",
+                       "default",
+                       "-an",
+                       "-vsync",
+                       "0"
+                      ])
+                      .toFormat("webp")
+                      .save(tmpFileOut) })
+                    const buff = fs.readFileSync(tmpFileOut)
+                     fs.unlinkSync(tmpFileOut)
+                     fs.unlinkSync(tmpFileIn)
+                     return buff }
+                    const enviarfiguimg = async (jid, path, quoted, options = {}) => {
+                    let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
+                    let buffer
+                    if (options && (options.packname || options.author)) {
+                     buffer = await writeExifImg(buff, options)
+                    } else {
+                     buffer = await imageToWebp(buff)
+                    }
+                    
+                    await anita.sendMessage(jid, {
+                     sticker: {
+                    url: buffer
+                     }, ...options
+                    }, {
+                     quoted
+                    })
+                    return buffer
+                     }
+                     const enviarfiguvid = async (jid, path, quoted, options = {}) => {
+                    let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
+                    let buffer
+                    if (options && (options.packname || options.author)) {
+                     buffer = await writeExifVid(buff, options)
+                    } else {
+                     buffer = await videoToWebp(buff)
+                    }
+                    await anita.sendMessage(jid, {
+                     sticker: {
+                    url: buffer
+                     }, ...options
+                    }, {
+                     quoted
+                    })
+                    return buffer
+                     }
+                    async function imageToWebp (media) {
+                    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.jpg`)
+                    
+                     fs.writeFileSync(tmpFileIn, media)
+                    
+                     await new Promise((resolve, reject) => {
+                      ff(tmpFileIn)
+                      .on("error", reject)
+                      .on("end", () => resolve(true))
+                      .addOutputOptions([
+                       "-vcodec",
+                       "libwebp",
+                       "-vf",
+                       "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+                      ])
+                      .toFormat("webp")
+                      .save(tmpFileOut)
+                     })
+                    const buff = fs.readFileSync(tmpFileOut)
+                     fs.unlinkSync(tmpFileOut)
+                     fs.unlinkSync(tmpFileIn)
+                     return buff
+                    }
+                    async function writeExifImg (media, metadata) {
+                     let wMedia = await imageToWebp(media)
+                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     fs.writeFileSync(tmpFileIn, wMedia)
+                    if (metadata.packname || metadata.author) {
+                      const img = new webp.Image()
+                      const json = {
+                       "sticker-pack-id": `https://github.com/DikaArdnt/Hisoka-Morou`,
+                       "sticker-pack-name": metadata.packname,
+                       "sticker-pack-publisher": metadata.author,
+                       "emojis": metadata.categories ? metadata.categories: [""]
+                      }
+                      const exifAttr = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00])
+                      const jsonBuff = Buffer.from(JSON.stringify(json), "utf-8")
+                      const exif = Buffer.concat([exifAttr, jsonBuff])
+                      exif.writeUIntLE(jsonBuff.length, 14, 4)
+                      await img.load(tmpFileIn)
+                      fs.unlinkSync(tmpFileIn)
+                      img.exif = exif
+                      await img.save(tmpFileOut)
+                      return tmpFileOut
+                     }
+                    }
+                    async function writeExifVid (media, metadata) {
+                     let wMedia = await videoToWebp(media)
+                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
+                     fs.writeFileSync(tmpFileIn, wMedia)
+                    if (metadata.packname || metadata.author) {
+                      const img = new webp.Image()
+                      const json = {
+                       "sticker-pack-id": `https://github.com/DikaArdnt/Hisoka-Morou`,
+                       "sticker-pack-name": metadata.packname,
+                       "sticker-pack-publisher": metadata.author,
+                       "emojis": metadata.categories ? metadata.categories: [""]
+                      }
+                      const exifAttr = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00])
+                      const jsonBuff = Buffer.from(JSON.stringify(json), "utf-8")
+                      const exif = Buffer.concat([exifAttr, jsonBuff])
+                      exif.writeUIntLE(jsonBuff.length, 14, 4)
+                      await img.load(tmpFileIn)
+                      fs.unlinkSync(tmpFileIn)
+                      img.exif = exif
+                      await img.save(tmpFileOut)
+                      return tmpFileOut
+                     }
+                    }
+                    
+                    // nao muda isso 🥺 \\
+                    const pacote = "ꪶ͓Clover-𝑴𝑫"
+                    //==================\\
+                    
+                    const criador = "CloverMods"
+                    if ((isMedia && !info.message.videoMessage || isQuotedImage)) {
+                    enviar('criando figurinha')
+                    const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage: info.message.imageMessage
+                    rane = getRandom('.'+ await getExtension(encmedia.mimetype))
+                    imgbuff = await getFileBuffer(encmedia, 'image')
+                    fs.writeFileSync(rane, imgbuff)
+                    const media = rane
+                    ran = getRandom('.'+media.split('.')[1])
+                    const upload = await TelegraPh(media)
+                    await enviarfiguimg(from, util.format(upload), info, {
+                     packname: pacote, author: criador
+                    })
+                     } else if ((isMedia && info.message.videoMessage.seconds < 11 || isQuotedVideo && info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11)) {
+                    enviar('criando figurinha')
+                    const encmedia = isQuotedVideo ? info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage: info.message.videoMessage
+                    rane = getRandom('.'+ await getExtension(encmedia.mimetype))
+                    imgbuff = await getFileBuffer(encmedia, 'video')
+                    fs.writeFileSync(rane, imgbuff)
+                    const media = rane
+                    ran = getRandom('.'+media.split('.')[1])
+                    const upload = await TelegraPh(media)
+                    await enviarfiguvid(from, util.format(upload), info, {
+                     packname: pacote, author: criador
+                    })
+                     } else return enviar(`Marque a imagem com o clover ${prefix}sticker ou coloque na legenda, o video ou gif so pode ter 10 segundos de duração`)
+                    }
+                     break
+
   //NSFW
-  case 'loli':
+  case 'lolis':
   case 'nsfwloli':{
     waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/nsfwloli?apikey=clover')
     templateMassage = {
@@ -793,7 +990,7 @@ case 'antilink':
     }
     break
 
-    case 'neko':
+    case 'nekos':
     case 'nsfwneko':{
       waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/neko?apikey=clover')
       templateMassage = {
@@ -1078,17 +1275,17 @@ break
   ┃✯- ℕ𝕊𝔽𝕎
   ┃ ✯╭──────────◆
   ┃ ✯│𝔼𝕁𝔼𝕄ℙ𝕃𝕆 (.nsfwero)
-  ┃ ✯│${prefix} ahegao
-  ┃ ✯│${prefix} ass
-  ┃ ✯│${prefix} loli
-  ┃ ✯│${prefix} neko
-  ┃ ✯│${prefix} pussy
-  ┃ ✯│${prefix} yuri
-  ┃ ✯│${prefix} ero
-  ┃ ✯│${prefix} bdsm
-  ┃ ✯│${prefix} orgy
-  ┃ ✯│${prefix} cum
-  ┃ ✯│${prefix} hentai
+  ┃ ✯│${prefix} nsfwahegao
+  ┃ ✯│${prefix} nsfwass
+  ┃ ✯│${prefix} nsfwloli
+  ┃ ✯│${prefix} nsfwneko
+  ┃ ✯│${prefix} nsfwpussy
+  ┃ ✯│${prefix} nsfwyuri
+  ┃ ✯│${prefix} nsfwero
+  ┃ ✯│${prefix} nsfwbdsm
+  ┃ ✯│${prefix} nsfworgy
+  ┃ ✯│${prefix} nsfwcum
+  ┃ ✯│${prefix} nsfwhentai
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
   ╭─────────────◆ 

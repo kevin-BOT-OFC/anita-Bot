@@ -435,19 +435,18 @@ case 'agregar' :
       await anita.groupParticipantsUpdate(from, [pepe] , 'add')
       break
  
-  case 'kit' : 
-  case 'ban':
-  case 'kill' :
-    case 'eliminar' :
-      case 'largate' :
-      if(args.length<0 ) return 
-      enviar('👀✍𝔼𝕤𝕔𝕣𝕚𝕓𝕖 𝕖𝕝 𝕟𝕦𝕞𝕖𝕣𝕠 𝕕𝕖 𝕝𝕒 𝕡𝕖𝕣𝕤𝕠𝕟𝕒 𝕢𝕦𝕖 𝕕𝕖𝕤𝕖𝕒𝕤 𝕖𝕝𝕚𝕞𝕚𝕟𝕒𝕣 𝕤𝕠𝕪 𝕦𝕟 𝔹𝕆𝕋 𝕟𝕠 𝕒𝕕𝕚𝕧𝕚𝕟𝕠🤔🔮')
-      if(!isGroupAdmins) return enviar ('✨😎𝕝𝕠 𝕤𝕚𝕖𝕟𝕥𝕠 𝕞𝕚 𝕜𝕚𝕟𝕘 , 𝕟𝕠 𝕖𝕣𝕖𝕤 𝕦𝕟 𝕒𝕕𝕞𝕚𝕟𝕚𝕤𝕥𝕣𝕒𝕕𝕠𝕣 𝕕𝕖 𝕝𝕠𝕤 𝔾𝕆𝔻𝕊😎✨')
-      if(!isBotGroupAdmins) return enviar(respuesta.botadmin)
-      let pepe2 =  info.quoted ? info.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-      await anita.groupParticipantsUpdate(from, [pepe2] , 'remove')
-      break
-
+      case "ban":
+        if (!isGroup) return enviar(respuesta.grupos)
+        if (!isGroupAdmins) return enviar(respuesta.admin)
+        if (q < 1) return enviar("🎭 👀✍𝔼𝕤𝕔𝕣𝕚𝕓𝕖 𝕖𝕝 𝕟𝕦𝕞𝕖𝕣𝕠 𝕕𝕖 𝕝𝕒 𝕡𝕖𝕣𝕤𝕠𝕟𝕒 𝕢𝕦𝕖 𝕕𝕖𝕤𝕖𝕒𝕤 𝕖𝕝𝕚𝕞𝕚𝕟𝕒𝕣 𝕤𝕠𝕪 𝕦𝕟a 𝔹𝕆𝕋 𝕟𝕠 𝕒𝕕𝕚𝕧𝕚𝕟a🤔🔮 ")
+        if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+        if (info.message.extendedTextMessage != undefined || info.message.extendedTextMessage != null) {
+        kicka = info.message.extendedTextMessage.contextInfo.participant
+        anita.groupParticipantsUpdate(from, [`${q}@s.whatsapp.net`], "remove")
+        } else { 
+        enviar("࿐ Marcar el mensaje de la persona")
+        }
+        break
 
       case 'welcome' : 
       case 'bienvenida': 
@@ -541,17 +540,48 @@ case 'hola':
 
           case "playvideo":
             reply("aguarde um minuto")
-            bla = await fetchJson(`https://trevorestapi.onrender.com/api/download/ytmp4?url=https://www.youtube.com/watch?v=7AlAYttGnAg&apikey=clover=${q}`) 
+            bla = await fetchJson(`https://trevorestapi.onrender.com/api/yt/playmp4?query=vmz%20baka&apikey=clover=${q}`) 
             audbla = await getBuffer(bla.url)
             anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
              {quoted: live}).catch(e => {
             reply("erro")
             })
             break    
+
             
+
+            //PERFIL//
+
+case "perfil":
+try {
+ppimg = await anita.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
+} catch(e) {
+ppimg = logo
+}
+perfil = await getBuffer(ppimg)
+enviar(respuesta.espere)
+try {
+anita.sendMessage(from, {
+image: perfil,
+caption: `
+🎭 Aqui está su informacion
+
+☆ Name: ${pushname}
+☆ Número: ${sender.split("@")[0]}
+☆ Wa.me: https://wa.me/${sender.split("@")[0]}
+☆ Grupo: ${groupName}
+`
+}, {quoted: info})
+} catch(e) {
+console.log(e)
+enviar(respuesta.error)
+}
+break
+
+//GRUPOS//
             case "infogp":
-              if (!isGroup) return enviar(respuesta.grupo)
-              if (!isBotGroupAdmins) return enviar(respuesta.botadm)
+              if (!isGroup) return enviar(respuesta.grupos)
+              if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
               enviar(`
               ╭─────────────◆ 
               ┃✯----�𝑰𝑵𝑭𝑶 𝑮𝑹𝑼𝑷𝑶�----⦿
@@ -565,6 +595,102 @@ case 'hola':
               ╰━━━━━━━━━━━──⊷
               `)
               break
+
+              case "gplink":
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+const link = await anita.groupInviteCode(from)
+enviar(`🎭 Link de grupo : https://chat.whatsapp.com/${link} `)
+break
+
+case "resetlink":
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+try {
+await anita.groupRevokeInvite(from)
+enviar("🎭 El link de invitación se restableció correctamente ✓ ")
+} catch(e) {
+console.log(e)
+enviar(respuesta.erro)
+}
+break
+
+case "salir":
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+enviar("Está bien ... Lo siento si no pude ayudarte con lo que necesitabas.... Adiós😔")
+await delay(1000)
+try {
+await anita.groupLeave(from)
+} catch(e) {
+console.log(e)
+enviar(respuesta.erro)
+}
+break
+
+case "promover":
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+if (q < 1) return enviar("🎭 ¿Dónde está el número? ")
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+try {
+anita.groupParticipantsUpdate(from, [`${q}@s.whatsapp.net`], "promote")
+enviar(`🎭 ${q} Promovido con éxito a admin `)
+} catch(e) {
+console.log(e)
+enviar(respuesta.error)
+}
+break
+
+case 'tagall':
+case 'marcar':
+case 'hidetag':
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+members_id = []
+const mentions = (teks, memberr, id) => {
+(id == null || id == undefined || id == false) ? anita.sendMessage(from, {
+text: '@12345678901', contextInfo: {
+"mentionedJid": memberr
+}}): anita.sendMessage(from, {
+text: teks.trim(), contextInfo: {
+"mentionedJid": memberr
+}}, {
+quoted: info
+})
+}
+teks = `\n\n${args.length > 0 ? `\n ➣ [${q}]\n\n`: ''}$\n`
+for (let mem of groupMembers) {
+teks += `♧ @${mem.id.split('@')[0]}\n`
+members_id.push(mem.id)
+}
+mentions(teks, members_id, true)
+break
+
+
+case 'antilink':
+  if (!isGroupAdmins) return enviar(respuesta.admin)
+  if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+            if (args.length < 1) return enviar('digite 1 para ativar o 0 para desativar ')
+            if (Number(args[0]) === 1) {
+              if (isAntiLink) return enviar('Anti-Link está activo')
+              antilink.push(from)
+              fs.writeFileSync('./arquivos/antilink.json', JSON.stringify(antilink))
+              enviar('Anti-link estaba activo en el grupo ✔️')
+            } else if (Number(args[0]) === 0) {			
+              antilink.splice(from, 1)
+              fs.writeFileSync('./arquivos/antilink.json', JSON.stringify(antilink))
+              enviar('El antilink se ha deshabilitado correctamente en este grupo✔️')
+            } else {
+              enviar('1 para activar, 0 para desactivar ')
+            }
+            break
+              
 
               //IMAGENES//
             
@@ -593,6 +719,18 @@ case 'hola':
             }
             break
             
+            case 'waifu':{
+              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/waifu?apikey=clover')
+              templateMassage = {
+              image: {url:waifuddd.data.url,
+              quoted: info},
+              caption: 'waifu!',
+              footer: "ꪶ͓Ckev",
+              }
+              anita.sendMessage(from, templateMassage)
+              }
+              break
+
             case 'waifu2':{
             waifuddd = await axios.get('https://waifu.pics/api/sfw/waifu')
             templateMassage = {
@@ -771,21 +909,60 @@ case 'hola':
                     anita.sendMessage(from, templateMassage)
                     }
                     break
+
+                    case 'ass' :
+                  case 'nsfwass':{
+                    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/nsfw/ass?apikey=clover')
+                    templateMassage = {
+                    image: {url:waifuddd.data.url,
+                    quoted: info},
+                    caption: 'mmm rico?!',
+                    footer: "ꪶ͓Ckev",
+                    }
+                    anita.sendMessage(from, templateMassage)
+                    }
+                    break
         
   
+//JUEGOS//
+case 'gay':// Sem Fotos
+const aleta = `${Math.floor(Math.random() * 105)}`
+enviar('Aguarde, confirmando su porcentaje...')
+await delay(5000)
+enviar(`${pushname} Su Porcentage de gay es de : ${aleta}%`)
+break
+
+case 'lindo':
+const aletc = `${Math.floor(Math.random() * 105)}`
+enviar('Aguarde, confirmando su porcentaje...')
+await delay(5000)
+enviar(`${pushname} Su porcentaje de lindo(a) es de  : ${aletc}%`)
+break
+
+case 'feura': // Sem Fotos
+const aletb = `${Math.floor(Math.random() * 105)}`
+enviar('Aguarde, confirmando su porcentaje...')
+await delay(5000)
+enviar(`${pushname} Su porcentaje de feo(a)es de : ${aletb}%`)
+break
+
+case 'delicia':
+const aletd = `${Math.floor(Math.random() * 105)}`
+enviar('Aguarde, confirmando su porcentaje...')
+await delay(5000)
+enviar(`${pushname} Su porcentaje de delicioso(a) es de  : ${aletd}%`)
+break
+
+case 'pendejo':
+const aletz = `${Math.floor(Math.random() * 105)}`
+enviar('Aguarde, confirmando su porcentaje...')
+await delay(5000)
+enviar(`${pushname} Su porcentaje de pendejo(a) es de  : ${aletz}%`)
+break
 
 
 
-
-
-
-
-
-
-
-
-
-
+//la verdad no c//
   case 'video': 
   const good4 = fs.readFileSync('./archivos/fotos/ranita.mp4')
   const desc2 = 'hola wee'
@@ -852,8 +1029,38 @@ case 'hola':
   ┃ ✯│▢${prefix} menu
   ┃ ✯│▢${prefix} hola
   ┃ ✯│▢${prefix} welcome
+  ┃ ✯│▢${prefix} salir
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
+
+  ╭─────────────◆ 
+  ┃✯- 𝔾ℝ𝕌ℙ𝕆𝕊
+  ┃ ✯╭──────────◆
+  ┃ ✯│${prefix} gplink
+  ┃ ✯│${prefix} resetlink
+  ┃ ✯│${prefix} antilink
+  ┃ ✯│${prefix} ban
+  ┃ ✯│${prefix} promover
+  ┃ ✯│${prefix} welcome
+  ┃ ✯│${prefix} add
+  ┃ ✯│${prefix} hidetag , marcar , tagall
+  ┃ ✯│${prefix} infogp
+  ┃ ✯│${prefix} perfil 
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+
+  ╭─────────────◆ 
+  ┃✯- 𝕁𝕌𝔼𝔾𝕆𝕊
+  ┃ ✯╭──────────◆
+  ┃ ✯│${prefix} gay 
+  ┃ ✯│${prefix} lindo
+  ┃ ✯│${prefix} retos , aleatorio
+  ┃ ✯│${prefix} feura
+  ┃ ✯│${prefix} delicia
+  ┃ ✯│${prefix} pendejo
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+
   ╭─────────────◆ 
   ┃✯- 𝕀𝕄𝔸𝔾𝔼ℕ𝔼𝕊
   ┃ ✯╭──────────◆
@@ -863,7 +1070,7 @@ case 'hola':
   ┃ ✯│${prefix} neko
   ┃ ✯│${prefix} wallpaperanime
   ┃ ✯│${prefix} wallpaperaesthetic
-  ┃ ✯│${prefix} wallpapergameri
+  ┃ ✯│${prefix} wallpapergamer
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
   ----------------- 
@@ -903,6 +1110,7 @@ case 'documento2':
 mimetype: 'application/octel-stream'},{quoted : live }) 
 break
 
+case 'retos':
 case 'aleatorio':
   const ale = ['Pasa el pack de una hormiga',
   'Dile a tus amigos que te vas a vivir a EU y mándame una captura de lo que te haya dicho',
@@ -991,6 +1199,7 @@ case 'aleatorio':
   const ale3 = ale[ale2]
   enviartexto(ale3)
   break
+
 default:
 
 }

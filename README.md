@@ -11,4 +11,4 @@
 
 ### `—◉ 💡 EXPERIMENTA CON UNA IA PARA NUEVOS COMANDOS 💡`
 - PAGINA [Aqui](https://beta.openai.com/playground)
-https://github.com/kevin-BOT-OFC
+

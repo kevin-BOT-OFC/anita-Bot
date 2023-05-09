@@ -81,11 +81,13 @@ const axios = require('axios');
 const speed = require("performance-now");
 const { getBuffer, getRandom, getExtension } = require('./archivos/lib/functions.js');
 const { fetchJson } = require("./archivos/lib/fetcher")
+const mimetype = require("mime-types")
+const BodyForm = require("form-data")
+const util = require("util")
+const path = require("path")
+const Crypto = require("crypto")
+const ff = require('fluent-ffmpeg')
 
-const { TelegraPh } = require("./archivos/telegraPh.js")
- const {
- tmpdir
-} = require("os")
 
 
 // DATA E HORA //
@@ -240,59 +242,12 @@ const botNumber = anita.user.id.split(':')[0]+'@s.whatsapp.net'
 const args = body.trim().split(/ +/).slice(1);
 const text = args.join(" ")
 const antilink = JSON.parse(fs.readFileSync('./archivos/antilink.json'))
+const {
+  tmpdir
+ } = require("os")
 
 //OJO SI NO DA BORRALA//
 
-global.author = '©ᴏғᴄ-kev﹏✍'
-
-
-const enviarfiguimg = async (jid, path, quoted, options = {}) => {
-  let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
-  let buffer
-  if (options && (options.packname || options.author)) {
-   buffer = await writeExifImg(buff, options)
-  } else {
-   buffer = await imageToWebp(buff)
-  }
-  
-  await anita.sendMessage(jid, {
-   sticker: {
-  url: buffer
-   }, ...options
-  }, {
-   quoted
-  })
-  return buffer
-   }
-   
-   const enviarfiguvid = async (jid, path, quoted, options = {}) => {
-  let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
-  let buffer
-  if (options && (options.packname || options.author)) {
-   buffer = await writeExifVid(buff, options)
-  } else {
-   buffer = await videoToWebp(buff)
-  }
-  
-  await anita.sendMessage(jid, {
-   sticker: {
-  url: buffer
-   }, ...options
-  }, {
-   quoted
-  })
-  return buffer
-   }
-   
-   const getFileBuffer1 = async (mediakey, MediaType) => { 
-  const stream = await downloadContentFromMessage(mediakey, MediaType)
-  
-  let buffer = Buffer.from([])
-  for await(const chunk of stream) {
-  buffer = Buffer.concat([buffer, chunk])
-  }
-  return buffer
-  }
 
 
 
@@ -341,6 +296,7 @@ return buffer}
 const isGroupAdmins = groupAdmins.includes(sender) || false 
 const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 const iswelkom = isGroup ? welkom.includes(from) : false 
+const isAntiLink = isGroup ? antilink.includes(from) : false
 //*******************************************//
 q = args.join(" ")
 const sendBtext = async (id, text1, desc1, but = [], vr) => {
@@ -353,6 +309,9 @@ const sendBimgT = async (id, img1, text1, desc1, but = [], vr) => { templateMess
 anita.sendMessage(id, templateMessage, {quoted: vr}) }
 const sendGifButao = async (id, gif1, text1, desc1, but = [], vr) => { buttonMessage = { video: {url: gif1}, caption: text1, gifPlayback: true, footerText: desc1, buttons: but, headerType: 4 }
 anita.sendMessage(id, buttonMessage, {quoted: vr}) } 
+global.openai_key = 'sk-...4mT1'
+global.openai_org_id = 'org-fRxXA5On3KPd9xYQBmYW2h74'
+const antiToxic = m.isGroup ? nttoxic.includes(from) : false
 //*******************************************//
 
 const enviartexto = (texto) => {
@@ -386,6 +345,55 @@ const enviarsticker = (Sticker) => {
 const enviardocumentos = (documentos) => {
   anita.sendMessage(from,{ document : documentos}, {quoted : live})
 }
+
+if (budy.includes("https://")){
+if (!isGroup) return
+if (!isAntiLink) return
+if (isGroupAdmins) return enviar(`*${pushname}* eres administrador, así que no te voy a prohibir`)
+		   var Kick = `${sender.split("@")[0]}@s.whatsapp.net`
+setTimeout( () => {
+	    	enviar(`*𝑒𝑙𝑖𝑚𝑖𝑛𝑎𝑑𝑜 𝑑𝑜 𝑔𝑟𝑢𝑝𝑜*`)
+	     	}, 100)
+	     	enviar(`*_「 link  detectado 」_*\n*${pushname}* Vc será banido do grupo *${groupMetadata.subject}*`)
+setTimeout( () => {
+anita.groupParticipantsUpdate(from, [Kick], "remove").catch((e) => {enviar(`*ERROR:* ${e}`)}) 
+					}, 10)
+ setTimeout( () => {
+	          
+	          }, 0)
+ }
+if (budy.includes("wa.me")){
+if (!isGroup) return
+if (!isAntiLink) return
+if (isGroupAdmins) return enviar(`*${pushname}* eres administradora, así que no te voy a prohibir`)
+		   var Kick = `${sender.split("@")[0]}@s.whatsapp.net`
+setTimeout( () => {
+	    	enviar(`*𝑒𝑙𝑖𝑚𝑖𝑛𝑎𝑑𝑜 𝑑𝑜 𝑔𝑟𝑢𝑝𝑜*`)
+	     	}, 100)
+	     	enviar(`*_「 link  detectado 」_*\n*${pushname}* voz seras baneado *${groupMetadata.subject}*`)
+setTimeout( () => {  
+anita.groupParticipantsUpdate(from, [Kick], "remove").catch((e) => {enviar(`*ERROR:* ${e}`)}) 
+					}, 10)
+ setTimeout( () => {
+	          
+	          }, 0)
+ }
+if (budy.includes("http://")){
+if (!isGroup) return
+if (!isAntiLink) return
+if (isGroupAdmins) return enviar(`*${pushname}* eres administrador, así que no te voy a prohibir`)
+		   var Kick = `${sender.split("@")[0]}@s.whatsapp.net`
+setTimeout( () => {
+	    	enviar(`*𝑒𝑙𝑖𝑚𝑖𝑛𝑎𝑑𝑜 𝑑𝑜 𝑔𝑟𝑢𝑝𝑜*`)
+	     	}, 100)
+	     	enviar(`*_「 link  detectado 」_*\n*${pushname}* vas hacer baneado del grupo *${groupMetadata.subject}*`)
+setTimeout( () => {  
+anita.groupParticipantsUpdate(from, [Kick], "remove").catch((e) => {enviar(`*ERROR:* ${e}`)}) 
+					}, 10)
+ setTimeout( () => {
+	          
+	          }, 0)
+ }
 
 
 // VERIFICACIONES 
@@ -478,49 +486,6 @@ case 'agregar' :
       }
       break
 
-      case 'figu': case "figu2" : case "stickergif":  case "stickergif2":
-        if ((isMedia && !info.message.videoMessage || isQuotedImage)) {      
-       var stream = await downloadContentFromMessage(info.message.imageMessage || info.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
-           var buffer = Buffer.from([])
-           for await(const chunk of stream) {
-            buffer = Buffer.concat([buffer, chunk])
-           }
-           let ran = 'stickers.webp'
-           fs.writeFileSync(`./${ran}`, buffer)
-            ffmpeg(`./${ran}`)
-            .on("error", console.error)
-            .on("end", () => {
-             exec(`webpmux -set exif ./dados/${ran} -o ./${ran}`, async (error) => {
-             
-              await enviarfiguimg(from, fs.readFileSync(`./${ran}`), info, {
-        packname: '𝕄𝕀ℕ𝕀 𝕁𝕌𝕃𝕊ℂ𝕀𝕋𝕆', author: '𝕁𝕌𝕃𝕊 𝕄𝕆𝔻𝔻𝔼ℝ𝕊'
-       })
-               
-               fs.unlinkSync(`./${ran}`)
-                    
-              })
-             })
-          .addOutputOptions([
-              "-vcodec", 
-             "libwebp", 
-             "-vf", 
-         "scale=320:320:force_original_aspect_ratio=decrease,fps=15, pad=320:320:(ow-iw)/2:(oh-ih)/2:color=green@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
-           ])
-          .toFormat('webp')
-          .save(`${ran}`)	 
-           } else if ((isMedia && info.message.videoMessage.seconds < 11 || isQuotedVideo && info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11)) {
-       const encmedia = isQuotedVideo ? info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage: info.message.videoMessage
-       rane = getRandom('.'+ await getExtension(encmedia.mimetype))
-       imgbuff = await getFileBuffer(encmedia, 'video')
-       fs.writeFileSync(rane, imgbuff)
-       const media = rane
-       ran = getRandom('.'+media.split('.')[1])
-       const upload = await TelegraPh(media)
-       await enviarfiguvid(from, util.format(upload), info, {
-        packname: '𝕄𝕀ℕ𝕀 𝕁𝕌𝕃𝕊ℂ𝕀𝕋𝕆', author: '𝕁𝕌𝕃𝕊 𝕄𝕆𝔻𝔻𝔼ℝ𝕊'
-       }) 
-       }
-                 break
 
 
 
@@ -552,7 +517,28 @@ case 'hola':
             })
             break    
 
-            
+            case 'ytmp3': case 'ytaudio': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
+if (args.length < 1 || !isUrl(text) || !xeonaudp3.isYTUrl(text)) throw `Where's the yt link?\nExample: ${prefix + command} https://youtube.com/shorts/YQf-vMjDuKY?feature=share`
+const audio=await xeonaudp3.mp3(text)
+await anita.sendMessage(m.chat,{
+    audio: fs.readFileSync(audio.path),
+    mimetype: 'audio/mp4', ptt: true,
+    contextInfo:{
+        externalAdReply:{
+            title:audio.meta.title,
+            body: botname,
+            thumbnail: await fetchBuffer(audio.meta.image),
+            mediaType:2,
+            mediaUrl:text,
+        }
+
+    },
+},{quoted:m})
+await fs.unlinkSync(audio.path)
+break
+
+
+
 
             //PERFIL//
 

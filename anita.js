@@ -87,6 +87,8 @@ const util = require("util")
 const path = require("path")
 const Crypto = require("crypto")
 const ff = require('fluent-ffmpeg')
+const gis = require('g-i-s');
+const imageToBase64 = require('image-to-base64');
 
 
 
@@ -104,9 +106,11 @@ const colom = moment().tz('America/Bogota').format('DD/MM HH:mm')
 var prefix = '.' //prefijo
 var NombreBot = 'anita Bot' // nombre del bot 
 var Creador = "Juls Modders & clovers Mods" // No cambiar
-
+owner = '573001382233'
+blocked = []
 // BANNER //
-const {videoToWebp,imageToWebp,writeExifImg,writeExifVid} = require('./archivos/stickersss.js')
+const {videoToWebp,imageToWebp,writeExifImg,writeExifVid} = require('./archivos/stickersss.js');
+const { error } = require('console');
 const welkom = JSON.parse(fs.readFileSync('./archivos/welkom.json'))
 
 const color = (text, color) => {
@@ -238,6 +242,7 @@ const pushname = info.pushName ? info.pushName : ''
 const groupId = isGroup ? groupMetadata.id : ''
 const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
 const botNumber = anita.user.id.split(':')[0]+'@s.whatsapp.net'
+const ownerNumber = ['573001382233@s.whatsapp.net']
 const args = body.trim().split(/ +/).slice(1);
 const text = args.join(" ")
 const antilink = JSON.parse(fs.readFileSync('./archivos/antilink.json'))
@@ -296,6 +301,7 @@ const isGroupAdmins = groupAdmins.includes(sender) || false
 const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 const iswelkom = isGroup ? welkom.includes(from) : false 
 const isAntiLink = isGroup ? antilink.includes(from) : false
+const isOwner = ownerNumber.includes(sender)
 //*******************************************//
 q = args.join(" ")
 const sendBtext = async (id, text1, desc1, but = [], vr) => {
@@ -312,6 +318,8 @@ global.openai_key = 'sk-...4mT1'
 global.openai_org_id = 'org-fRxXA5On3KPd9xYQBmYW2h74'
 const antiToxic = m.isGroup ? nttoxic.includes(from) : false
 //*******************************************//
+
+
 
 const enviartexto = (texto) => {
   anita.sendMessage(from,{ text : texto }, {quoted :  live})
@@ -413,7 +421,7 @@ enviar('🤔👍')}
 respuesta = {
 espere: " ..enviando.. ",
 aguarde: "..Espere Porfavor.. ",
-dono: ".. Este comando es Privado.. ",
+dono: ".. Este comando es Privado..Solo lo puede usar mi creador  ",
 grupos: ".. Este comando es para grupos.. ",
 privado: ".. Este comando es para chats.. ",
 admin: " ... Este comando es solo para admins..",
@@ -433,6 +441,16 @@ error: ".. Error, intente nuevamente.."
 // CASES creadas por juls y kevin
 
 switch(command){
+
+
+  case 'creador':
+    case  'dueño':
+                enviar ('Mi creador es kevin ')
+              break
+          
+
+
+
 
 case 'agregar' :
   case 'add' : 
@@ -611,9 +629,8 @@ enviar(respuesta.erro)
 break
 
 case "salir":
+if(!isOwner) return enviar(respuesta.dono)
 if (!isGroup) return enviar(respuesta.grupos)
-if (!isGroupAdmins) return enviar(respuesta.admin)
-if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
 enviar("Está bien ... Lo siento si no pude ayudarte con lo que necesitabas.... Adiós😔")
 await delay(1000)
 try {
@@ -1086,7 +1103,7 @@ case 'antilink':
                   anita.sendMessage(from, templateMassage)
                   }
                   break 
-
+                  
 //MEME//
                   case 'meme' :
                     case 'memes':{
@@ -1105,6 +1122,10 @@ case 'antilink':
 
 
 //JUEGOS//
+
+
+
+
 case 'gay':// Sem Fotos
 const aleta = `${Math.floor(Math.random() * 105)}`
 enviar('Aguarde, confirmando su porcentaje...')
@@ -1267,6 +1288,7 @@ break
   ┃ ✯│▢${prefix} welcome
   ┃ ✯│▢${prefix} salir
   ┃ ✯│▢${prefix} ping
+  ┃ ✯│▢${prefix} creador
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
 
@@ -1296,6 +1318,7 @@ break
   ┃ ✯│${prefix} delicia
   ┃ ✯│${prefix} pendejo
   ┃ ✯│${prefix} puto o puta (la que quieras)
+  ┃ ✯│${prefix} humornegro
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
 
@@ -1463,12 +1486,7 @@ case 'aleatorio':
   enviartexto(ale3)
   break
 
-case 'piropo':
-  const piropo = ['Me gustaría ser papel para poder envolver ese bombón.' , 'Eres como wifi sin contraseña, todo el mundo te busca' , 'Quién fuera bus para andar por las curvas de tu corazón.' , "Quiero volar sin alas y salir de este universo, entrar en el tuyo y amarte en silencio.", "Quisiera ser mantequilla para derretirme en tu arepa.", "Si la belleza fuera pecado vos ya estarías en el infierno.", "Me Gustaría Ser Un Gato Para Pasar 7 Vidas A Tu Lado.", "Robar Está Mal Pero Un Beso De Tu Boca Sí Me Lo Robaría.", "Qué Hermoso Es El Cielo Cuando Está Claro Pero Más Hermoso Es El Amor Cuando Te Tengo A Mi Lado.", "Bonita, Camina Por La Sombra, El Sol Derrite Los Chocolates.", "Si Fuera Un Correo Electrónico Serías Mi Contraseña.", "Quisiera que fueses monte para darte machete", "Perdí mi número de teléfono ¿Me das el tuyo?", "¿Cómo te llamas para pedirte de regalo a Santa Claus?", " En el cielo hay muchas estrellas, pero la más brillante está en la Tierra y eres tú.", "¿Acaba de salir el sol o es la sonrisa que me regalas hoy?", "No es el ron ni la cerveza, eres tú quien se me ha subido a la cabeza", "Si hablamos de matemáticas eres la suma de todos mis deseos.", "Pareces Google porque tienes todo lo que yo busco.", "Mi café favorito, es el de tus ojos.", "Quiero ser photoshop para retocarte todo el cuerpo.", "Quisiera que fueras cereal, para cucharearte en las mañanas.", 'Quien fuera hambre, para darte tres veces al día.']
-  const piropo2 = Math.floor(Math.random()*piropo.length)
-  const piropo3 = piropo[piropo2]
-  enviartexto(piropo3)
-  break
+
 
 case 'fraseromantica': case 'frases' : 
   const frase = ['Hace un año no sabía quién eras, y hoy no sabría cómo vivir sin ti.' , 'Tú eres mi meta, el camino que decidí tomar, la mujer de mi vida, mi vida sin más.' , 'Si lloras, te regalaré mis sonrisas. Si tienes frío, te regalaré mi calor.' , ' Si te duele, yo te curaré. Vida mía, siempre te protegeré.' , 'Por arte de magia, un día todos mis pensamientos se centraron en ti.' , 'Tumbémonos juntos, susurrémonos cosas lindas al oído, sonriamos cogidos de la mano, y todas las noches dormiré contigo.' , 
@@ -1501,9 +1519,35 @@ case 'chistenegro': case 'humornegro':
 '¿Porqué los negros son zurds? Porque no tienen derechos',
 'Dos amigos se encuentran y le dice uno al otro: - Oye, ¿tu abuela es mecanica?. - No, ¿por qué?. - Porque la he visto en la autopista debajo de un camión.',
 'Cual es la diferencia entre albert einstein y el nene de 2 años? que tengo que albert einstein murio virgen',
-]
-
-
+'- Doctor, ¿tendré cura? - ¡Por supuesto, cura, misa y funeral!' ,
+'Entra un negrito a estudiar derecho y le preguntan: - Señor, ¿qué rama va a escoger? Y el negro responde: - Ninguna rama, hijo puta... a mí me dan un pupitre como a los blancos.' ,
+'Qué escala las Torres gemelas? Spiderman Qué las sobrevuela? Superman Qué las atraviesa? Musulman' ,
+'Dos hermanitos de 4 años peleándose: - Jaja... yo me voy a disney y vos ¡¡nooooo!!. - Si... pero yo no tengo leucemia.' ,
+'La mamá le dice a la niña ciega: - Y si te vuelves a portar mal, te cambio los muebles de lugar.', 
+'Un niño pequeño pregunta a su madre: - Mamá, mamá. ¿Cómo se llama eso que yo tengo?. ¿Tauro, virgo, sagitario?... - Cáncer, hijo, cáncer.', 
+'- ¿Qué haces con gorra, camiseta de los Lakers y collares de oro? ¡Es el velatorio de tu madre! - ¿No había que venir de negro?',
+'¿Qué hacen 2 epilépticos en una cabina de teléfono?. - La fiesta de la espuma.',
+'¿Qué diferencia hay entre el amor y el sida?. Pues que el sida es para toda la vida.',
+'Esto es una pareja que alquila un piso para ir a echar un polvo, y cuando ya acaban le dice la chica al chico. - Manolo, yo tengo el SIDA y otras muchas enfermedades y te las acabo de pegar. Y le dice Manolo: - Pues eso no es nada, ya que yo tengo la lepra y te he dejado la polla dentro.',
+'¿Qué hace un leproso tocando la guitarra?. - Carne picada.',
+'- Mamá, mamá, ¿me das una galleta?. - Niño, están encima del frigorífico. - Mamá, es que no tengo brazos... - Si no hay brazos, no hay galletas',
+'Un matrimonio va por la calle y se encuentran con un amigo que se dirige al marido:- Hola, Paco. ¿Qué tal estás? - Mal, Pedro, tengo un SIDA terrible. El médico me ha dado tres meses de vida. El amigo se despide rápidamente y se va todo acongojado. La mujer le recrimina al marido: - Pero, Paco. ¿Cómo le dices a la gente que tienes SIDA, si lo que tienes en realidad es cáncer de pulmón? - Yo me voy a morir, pero contigo nadie se acuesta...',
+'Un tipo entra en el dormitorio y le dice a su mujer: - Claro, yo como un estúpido buscando el cinturón por toda la casa, y tu aquí ahorcada con él, ¡no te jode!.',
+'Estaba Bush en la Casa Blanca cuando suena el teléfono y habla Bin Laden: - Tengo dos noticias, una buena y otra mala. A lo que responde Bush: - La buena primero. - La buena es que me voy a entregar. - ¿Y la mala?. - La mala es que voy en avión.',
+'Suena el teléfono: - ¿Diga? - contesta el hombre -. - Hola, soy su médico. Tengo que comunicarle una noticia buena y otra mala. ¿Cuál quiere oír primero?. - Pues empiece con la buena. - Padece usted una enfermedad que mata en 24 horas, dice el médico sin inmutarse. - ¡Joder!. ¡Y esa es la buena!. ¿Cuál es la mala entonces?. - Que estoy intentando localizarle desde ayer.',
+'¿Porque en África no ven bob esponja? Porque lo echan después de comer',
+'Un niño llama a un telefonillo: - ¿Baja Juanito a jugar al fútbol?. - ¡Pero si Juanito no tiene ni brazos ni piernas!. - Ya, pero bota muy bien.',
+'¿Por qué los alemanes no comen frijoles? Porque en otros países se les llama JUDÍAS',
+'-Acepta usted a María en la salud y en la enfermedad, en la riqueza y en la pobreza hasta que la muerte os separe? -Si,no,si,no,no',
+'Un niño vuelve a su casa despues del colegio... -Mamá, ¿Por qué huele tan mal?, mamá, mamá...',
+'Tu novía me guiño un ojo el otro día +No, es que tiene un tick -Pues yo ya me la he follao',
+'Una niña le pregunta a su madre: ¿Me queda bien este vestido de bailarina?. Y la madre le contesta: Sí, pero se te ve un poco la silla de ruedas.',
+'- ¡Doctor, doctor! ¿Qué tal ha ido la operación? - ¿Operación, no era una autopsia?',
+'¿De qué color era el coche de Lady di?. - Negro estampado.',]
+const negro2 = Math.floor(Math.random()*negro.length)
+const negro3 = negro[negro2]
+enviartexto(negro3)
+break
 
 
 

@@ -106,9 +106,7 @@ var NombreBot = 'anita Bot' // nombre del bot
 var Creador = "Juls Modders & clovers Mods" // No cambiar
 
 // BANNER //
-
 const {videoToWebp,imageToWebp,writeExifImg,writeExifVid} = require('./archivos/stickersss.js')
-
 const welkom = JSON.parse(fs.readFileSync('./archivos/welkom.json'))
 
 const color = (text, color) => {
@@ -237,6 +235,7 @@ const groupDesc = isGroup ? groupMetadata.desc : ''
 const groupMembers = isGroup ? groupMetadata.participants : ''
 const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 const pushname = info.pushName ? info.pushName : ''
+const groupId = isGroup ? groupMetadata.id : ''
 const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
 const botNumber = anita.user.id.split(':')[0]+'@s.whatsapp.net'
 const args = body.trim().split(/ +/).slice(1);
@@ -799,199 +798,7 @@ case 'antilink':
                   break
 
                   //stickers//
-                  case 'sticker': case 's': case 'stickergif': case 'sgif': case 'f': case 'figu': {
-                    function TelegraPh (Path) {
-                      return new Promise (async (resolve, reject) => {
-                        if (!fs.existsSync(Path)) return reject(new Error("File not Found"))
-                        try {
-                          const form = new BodyForm();
-                          form.append("file", fs.createReadStream(Path))
-                          const data = await  axios({
-                            url: "https://telegra.ph/upload",
-                            method: "POST",
-                            headers: {
-                              ...form.getHeaders()
-                            },
-                            data: form
-                          })
-                          return resolve("https://telegra.ph" + data.data[0].src) 
-                          } catch (err) { return reject(new Error(String(err)))}})}
-                    
-                    module.exports = { TelegraPh }
-                    const getRandom = (ext) => {
-                      return `${Math.floor(Math.random() * 10000)}${ext}`
-                    }
-                    async function videoToWebp (media) {
-                    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.mp4`)
-                    fs.writeFileSync(tmpFileIn, media)
-                    await new Promise((resolve, reject) => {
-                      ff(tmpFileIn)
-                      .on("error", reject)
-                      .on("end", () => resolve(true))
-                      .addOutputOptions([
-                       "-vcodec",
-                       "libwebp",
-                       "-vf",
-                       "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse",
-                       "-loop",
-                       "0",
-                       "-ss",
-                       "00:00:00",
-                       "-t",
-                       "00:00:05",
-                       "-preset",
-                       "default",
-                       "-an",
-                       "-vsync",
-                       "0"
-                      ])
-                      .toFormat("webp")
-                      .save(tmpFileOut) })
-                    const buff = fs.readFileSync(tmpFileOut)
-                     fs.unlinkSync(tmpFileOut)
-                     fs.unlinkSync(tmpFileIn)
-                     return buff }
-                    const enviarfiguimg = async (jid, path, quoted, options = {}) => {
-                    let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
-                    let buffer
-                    if (options && (options.packname || options.author)) {
-                     buffer = await writeExifImg(buff, options)
-                    } else {
-                     buffer = await imageToWebp(buff)
-                    }
-                    
-                    await anita.sendMessage(jid, {
-                     sticker: {
-                    url: buffer
-                     }, ...options
-                    }, {
-                     quoted
-                    })
-                    return buffer
-                     }
-                     const enviarfiguvid = async (jid, path, quoted, options = {}) => {
-                    let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
-                    let buffer
-                    if (options && (options.packname || options.author)) {
-                     buffer = await writeExifVid(buff, options)
-                    } else {
-                     buffer = await videoToWebp(buff)
-                    }
-                    await anita.sendMessage(jid, {
-                     sticker: {
-                    url: buffer
-                     }, ...options
-                    }, {
-                     quoted
-                    })
-                    return buffer
-                     }
-                    async function imageToWebp (media) {
-                    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.jpg`)
-                    
-                     fs.writeFileSync(tmpFileIn, media)
-                    
-                     await new Promise((resolve, reject) => {
-                      ff(tmpFileIn)
-                      .on("error", reject)
-                      .on("end", () => resolve(true))
-                      .addOutputOptions([
-                       "-vcodec",
-                       "libwebp",
-                       "-vf",
-                       "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
-                      ])
-                      .toFormat("webp")
-                      .save(tmpFileOut)
-                     })
-                    const buff = fs.readFileSync(tmpFileOut)
-                     fs.unlinkSync(tmpFileOut)
-                     fs.unlinkSync(tmpFileIn)
-                     return buff
-                    }
-                    async function writeExifImg (media, metadata) {
-                     let wMedia = await imageToWebp(media)
-                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     fs.writeFileSync(tmpFileIn, wMedia)
-                    if (metadata.packname || metadata.author) {
-                      const img = new webp.Image()
-                      const json = {
-                       "sticker-pack-id": `https://github.com/DikaArdnt/Hisoka-Morou`,
-                       "sticker-pack-name": metadata.packname,
-                       "sticker-pack-publisher": metadata.author,
-                       "emojis": metadata.categories ? metadata.categories: [""]
-                      }
-                      const exifAttr = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00])
-                      const jsonBuff = Buffer.from(JSON.stringify(json), "utf-8")
-                      const exif = Buffer.concat([exifAttr, jsonBuff])
-                      exif.writeUIntLE(jsonBuff.length, 14, 4)
-                      await img.load(tmpFileIn)
-                      fs.unlinkSync(tmpFileIn)
-                      img.exif = exif
-                      await img.save(tmpFileOut)
-                      return tmpFileOut
-                     }
-                    }
-                    async function writeExifVid (media, metadata) {
-                     let wMedia = await videoToWebp(media)
-                     const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-                     fs.writeFileSync(tmpFileIn, wMedia)
-                    if (metadata.packname || metadata.author) {
-                      const img = new webp.Image()
-                      const json = {
-                       "sticker-pack-id": `https://github.com/DikaArdnt/Hisoka-Morou`,
-                       "sticker-pack-name": metadata.packname,
-                       "sticker-pack-publisher": metadata.author,
-                       "emojis": metadata.categories ? metadata.categories: [""]
-                      }
-                      const exifAttr = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00])
-                      const jsonBuff = Buffer.from(JSON.stringify(json), "utf-8")
-                      const exif = Buffer.concat([exifAttr, jsonBuff])
-                      exif.writeUIntLE(jsonBuff.length, 14, 4)
-                      await img.load(tmpFileIn)
-                      fs.unlinkSync(tmpFileIn)
-                      img.exif = exif
-                      await img.save(tmpFileOut)
-                      return tmpFileOut
-                     }
-                    }
-                    
-                    // nao muda isso 🥺 \\
-                    const pacote = "ꪶ͓Clover-𝑴𝑫"
-                    //==================\\
-                    
-                    const criador = "CloverMods"
-                    if ((isMedia && !info.message.videoMessage || isQuotedImage)) {
-                    enviar('criando figurinha')
-                    const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage: info.message.imageMessage
-                    rane = getRandom('.'+ await getExtension(encmedia.mimetype))
-                    imgbuff = await getFileBuffer(encmedia, 'image')
-                    fs.writeFileSync(rane, imgbuff)
-                    const media = rane
-                    ran = getRandom('.'+media.split('.')[1])
-                    const upload = await TelegraPh(media)
-                    await enviarfiguimg(from, util.format(upload), info, {
-                     packname: pacote, author: criador
-                    })
-                     } else if ((isMedia && info.message.videoMessage.seconds < 11 || isQuotedVideo && info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11)) {
-                    enviar('criando figurinha')
-                    const encmedia = isQuotedVideo ? info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage: info.message.videoMessage
-                    rane = getRandom('.'+ await getExtension(encmedia.mimetype))
-                    imgbuff = await getFileBuffer(encmedia, 'video')
-                    fs.writeFileSync(rane, imgbuff)
-                    const media = rane
-                    ran = getRandom('.'+media.split('.')[1])
-                    const upload = await TelegraPh(media)
-                    await enviarfiguvid(from, util.format(upload), info, {
-                     packname: pacote, author: criador
-                    })
-                     } else return enviar(`Marque a imagem com o clover ${prefix}sticker ou coloque na legenda, o video ou gif so pode ter 10 segundos de duração`)
-                    }
-                     break
+                 
 
   //NSFW
   case 'lolis':
@@ -1610,6 +1417,33 @@ case 'piropo':
   const piropo3 = piropo[piropo2]
   enviartexto(piropo3)
   break
+
+case 'fraseromantica':
+  const frase = ['Hace un año no sabía quién eras, y hoy no sabría cómo vivir sin ti.' , 'Tú eres mi meta, el camino que decidí tomar, la mujer de mi vida, mi vida sin más.' , 'Si lloras, te regalaré mis sonrisas. Si tienes frío, te regalaré mi calor.' , ' Si te duele, yo te curaré. Vida mía, siempre te protegeré.' , 'Por arte de magia, un día todos mis pensamientos se centraron en ti.' , 'Tumbémonos juntos, susurrémonos cosas lindas al oído, sonriamos cogidos de la mano, y todas las noches dormiré contigo.' , 
+  'Pareces el brujo del tiempo, contigo pasa tan deprisa y sin ti tan lento…' , 'Con un beso tuyo puedo tocar las estrellas.' , ' No hay paisaje más hermoso que el que encuentro en la mirada de tus ojos.' , 'Tú me diste la luz, y mientras duerma contigo no le tendré miedo a la noche.' , ' Me cautivaste con tu sonrisa, me enamoraste con tu corazón.' , ' Tu voz es la sinfonía más bonita que he escuchado en toda mi vida.' , ' Sabrás que le amas porque hará que dejes de sufrir por el pasado, que vivas el presente y que dejes de preocuparte por el futuro.' ,' Saboreemos nuestros cuerpos, amémonos sin complejos, convirtamos esta historia, en un cuento de amor eterno.' , ' Tu amor nació en mi corazón, y ahora recorre mis venas llenándome de ilusión.' , ' Yo no fui quien escogió amarte, sino mi alma, y me dijo que te amaría eternamente.' , ' No tienes ni idea de cómo me tiemblan las piernas cada vez que me miras…' , 'i me dices «Te quiero», te regalo mi corazón entero.']
+  const frase2 = Math.floor(Math.random()*frase.length)
+  const frase3 = frase[frase2]
+  enviartexto(frase3)
+  break
+
+case 'historia': case 'terror':
+  const miedo = ['Una familia, compuesta por dos pequeños y sus padres, viajaban por carretera hacia [....] cuando el coche se les averió. Los padres salieron a buscar ayuda y, para que los niños no se aburrieran, les dejaron con la radio encendida. Cayó la noche y los padres seguían sin volver cuando escucharon una inquietante noticia en la radio: un asesino muy peligroso se había escapado de un centro penitenciario cercano a [....] y pedían que se extremaran las precauciones.Las horas pasaban y los padres de los niños no regresaban. De pronto, empezaron a escuchar golpes sobre sus cabezas. “Poc, poc, poc”. Los golpes, que parecían provenir de algo que golpeaba la parte de arriba del coche, eran cada vez más rápidos y más fuertes. “POC, POC, POC”. Los niños, aterrados, no pudieron resistir más: abrieron la puerta y huyeron a toda prisa.Solo el mayor de los niños se atrevió a girar la cabeza para mirar qué provocaba los golpes. No debería haberlo hecho: sobre el coche había un hombre de gran tamaño, que golpeaba la parte superior del vehículo con algo que tenía en las manos: eran las cabezas de sus padres.' ,
+  ' Hace unos años, en un campamento, hubo un grupo de jóvenes que, durante una excusión, se perdió. Tras varias horas perdidos, encontraron a un hombre solitario: llevaba un hacha a la espalda y no les daba buena espina pero, desesperados, le preguntaron cómo se llegaba al pueblo. A pesar de la primera impresión, el hombre resultó ser supergradable: les dijo que se llamaba Yoduloso y les acompañó hasta el pueblo, donde se despidió. Antes, se hizo una foto junto a los jóvenes.El grupo de jóvenes contó en el pueblo que el hombre que los había llevado hasta allí se llamaba Yoduloso, pero los vecinos de la localidad dijeron que aquello era imposible. El único Yoduloso que había habido en el pueblo falleció hace más de 100 años, y murió de una forma horrible: un grupo de niños jugaba a la pelota y se le escapó, y Yoduloso fue a por ella. Llevaba un hacha en la mano y tuvo la mala suerte de tropezar y cortarse su propia pierna. Murió desangrado.Los jóvenes escucharon incrédulos y pensaron que, incluso a pesar de las coincidencias del nombre y de que aquel señor también llevaba un hacha, era imposible que se trata de la misma persona. Sin embargo, cuando revelaron aquella foto que se habían hecho al llegar al pueblo, se percataron de algo que les hizo cambiar de parecer: Yoduloso había desaparecido de la fotografía.' ,
+  ' Hace muchísimos años venía a los campamentos un joven llamado Manitou. Debido a su mal comportamiento, fue expulsado del campamento, y decidió vengarse. Durante toda la eternidad: aunque esto ocurrió hace muchísimo tiempo, Manitou sigue visitando los campamentos. Podemos saber que está cerca porque antes de su llegada puede escucharse un sonido similar al de un tambor.En ocasiones, al despertar, algunos niños se han dado cuenta de que les habían dibujado en la frente, o por el cuerpo, una letra M en color roja. Está pintada con sangre.' , 'Esta es la historia de una joven de [....], llamémosla Sara. De pequeña, Sara tenía miedo a la oscuridad, hasta que adoptó a un perro que le hacía compañía. Durante años, Sara dormía tranquila porque sabía que bajo la cama estaba su perro, y si tenía miedo solo tenía que extender la mano: entonces, el perro empezaba a lamerla hasta que se quedaba dormida.Así pasaron los años y Sara se hizo adulta. Una noche, en la radio, escuchó que cerca de [....] estaba en busca y captura un asesino muy peligroso. Sara, acompañada de su perro, no tenía miedo: se metió en la cama, extendió la mano hacia el borde y el perro, como todas las noches, empezó a lamerla.Durmió del tirón y, al despertar, le sorprendió que el perro no se hubiera cansado de lamerle la mano en toda la noche. O eso creía: al abrir los ojos, encontró al perro muerto sobre el suelo de la habitación. Bajo la cama, un hombre seguía lamiéndole la mano.',
+  'Varias adolescentes habían ido a pasar la noche en casa de una amiga, aprovechando que sus padres estaban de viaje. Cuando apagaron las luces se pusieron a hablar de un viejo al que acababan de enterrar en un cementerio cercano. Se decía que lo habían enterrado vivo y que se le podía escuchar arañando el ataúd, intentando salir.Una de las chicas se burló de aquella idea, así que las otras la desafiaron a que se levantara y fuera a visitar la tumba. Como prueba de que había ido, tenía que clavar una estaca de madera sobre la tierra de la tumba. La chica se fue y sus amigas apagaron la luz otra vez y esperaron a que volviera.Pero pasó una hora, y otra más, sin que tuvieran noticias de su amiga. Se quedaron en la cama despiertas, cada vez más aterradas. Llegó la mañana y la chica no había aparecido. Aquel mismo día, los padres de la chica regresaron a casa y, junto al resto de padres, acudieron al cementerio. Encontraron a la chica tirada sobre la tumba… Muerta. Al agacharse para clavar la estaca en el suelo, había pillado también el bajo de su falda. Cuando intentó levantarse y no pudo, creyó que el viejo muerto la había agarrado. Murió del susto en el acto.',
+  'Una adolescente está cuidando por primera vez a unos niños en una casa enorme y lujosa. Acuesta a los niños en el piso de arriba, y, cuando apenas se ha sentado delante de la televisión, suena el teléfono. A juzgar por su voz, el que llama es un hombre. Jadea, ríe de forma amenazadora y pregunta: “¿Has subido a ver a los niños?”.La canguro cuelga convencido de que sus amigos le están gastando una broma, pero el hombre vuelve a llamar y pregunta de nuevo: “¿Has subido a ver a los niños?”. Ella cuelga a toda prisa, pero el hombre llama por tercera vez, y esta vez dice: “¡Ya me he ocupado de los niños, ahora voy a por ti!”.La canguro está verdaderamente asustada. Llama a la policía y denuncia las llamadas amenazadoras. La policía pide que, si vuelve a llamar, intente distraerle al teléfono para que les de tiempo a localizar la llamada.Como era de esperar, el hombre llama de nuevo a los pocos minutos. La canguro le suplica que la deje en paz, y así le entretiene. Él acaba por colgar. De repente, el teléfono suena de nuevo, y a cada timbrazo el tono es más alto y más estridente. En esta ocasión, es la policía, que le da una orden urgente: “¡Salga de la casa inmediatamente! ¡Las llamadas vienen del piso de arriba!”.',
+' Un grupo de amigas había decidido ir a [...] para pasar unos días. Se registraron en el hotel y subieron a su habitación a dejar el equipaje, pero notaron un olor peculiar, como si se les hubiera olvidado sacar la basura o no hubieran tirado de la cadena del váter. Sin embargo, todo parecía estar en orden, así que se fueron y no volvieron hasta la última hora de la noche.El olor había empeorado notablemente a lo largo del día y ya era casi insoportable, de modo que llamaron a mantenimiento para que localizara su origen. La persona que les mandaron miró debajo de las camas, dentro de los armarios, incluso olfateó los desagües y las ventilaciones, pero no pudo encontrar la fuente del olor. Al final, limpiaron la habitación con generosas cantidades de productos perfumados, pusieron la ventilación al máximo y desearon las buenas noches al grupo de amigas. La peste estaba, por el momento, enmascarada, y como ellas estaban agotadas, se fueron a la cama. Una de ellas escondió la cartera debajo del colchón, como acostumbraba a hacer en los hoteles.Todas durmieron hasta bien entrada la mañana: grandes rayos de sol entraban ya en la habitación, caldeándola en extremo. El hedor seguía presente y más potente que nunca. Una de las mujeres, ya bastante irritada, volvió a llamar al departamento de mantenimiento para quejarse. Luego llamó al director del hotel para quejarse un poco más. Un pequeño ejército de personal de dirección y mantenimiento se presentó en breve, y una vez más, rebuscaron por todas partes sin resultado. Sin embargo, todos estuvieron de acuerdo en que el olor era inaguantable, así que dirección ofreció cambiar a las amigas de habitación.Recogieron sus cosas para bajar al vestíbulo, pero cuando la señora que había escondido la cartera hurgó debajo del colchón, tocó algo que parecía sospechosamente una mano humana. Quitaron el colchón de encima de la cama y ahí, en un hueco practicado entre los muelles del somier, había un hombre muerto. Era evidente que lo habían asesinado en la habitación y el asesino lo había escondido entre el colchón y el somier. Había recortado una parte de los muelles del somier para que el cuerpo no formara un bulto en la cama.',
+'Una niña de siete años se había quedado con su abuela en su pequeño piso porque sus padres se habían ido al cine. Todo fue normal, cenaron y se rieron un rato charlando juntas. A las diez de la noche, la abuela se puso a hacer labores de costura, y la niña se puso a ver la tele, pero de repente a la abuela le entró una sed increíble, y le dijo a su nieta si le podía traer un vaso de agua.-Está oscuro -dijo la niña.-No temas, sigue el pasillo, que justo al lado de la puerta del baño hay un interruptor.La niña se decidió, y al entrar al pasillo no veía nada porque estaba muy oscuro, por lo que se arrimó a una pared y fue palpando y tanteando a ciegas en busca de un interruptor. Al seguir andando y llegar al marco de la puerta del baño, se paró y siguió tanteando, y de repente notó como una mano huesuda intentaba arrastrarla a la oscuridad del baño. La niña logró apartarse y fue llorando a su abuela. Desde entonces, la niña está en tratamiento psicológico. ¿Que pasó, si solo estaban ellas dos en la casa y la abuela estaba en el salón cosiendo?',
+'Lo que me dispongo a relatar es absolutamente verídico y relativamente reciente, me ocurrió a mí hace aproximadamente seis meses. A mí el mundo del espiritismo, las psicofonías y demás me produce mucha curiosidad, pero a la vez me asusta.Un compañero de clase me proporcionó un CD que tenía grabadas algunas psicofonías. Mi hermano me propuso llevarme un portátil para escuchar el CD mientras se duchaba, y así lo hicimos. Antes de escuchar la primera psicofonía una voz presentaba el CD y hacía una advertencia: “Nunca lo escuchen a oscuras”. En ese momento, para asustar a mi hermano, apagué la luz del cuarto de baño y él gritó: “¡Enciende la luz!”. Cuando la encendí, el disco ya no sonaba. Alguien le había dado al stop. Yo no fui, de eso estoy seguro porque tenía el dedo en el interruptor de la luz, y mi hermano tampoco, estaba dentro de la bañera y a más de dos metros del portátil. ¿Quién apagó las psicofonías? No lo sé, y no estoy seguro de querer saberlo.',
+'Ted Martin y Sam Miller eran buenos amigos. Ambos pasaban mucho tiempo juntos. En esa noche en particular estaban sentados sobre una valla cerca de la oficina de correos hablando sobre nada en particular.Había un campo de nabos enfrente de la carretera. De repente vieron algo arrastrarse fuera del campo y ponerse en pie. Parecía un hombre, pero en la oscuridad resultaba difícil saberlo a ciencia cierta. Luego desapareció. Pero pronto apareció de nuevo. Se acercó hasta la mitad de la carretera, en ese momento se dio la vuelta y regresó al campo.Después salió por tercera vez y se dirigió hacia ellos. Llegados a ese punto Ted y Sam sentían miedo y comenzaron a correr. Pero cuando finalmente se detuvieron, pensaron que se estaban comportando como unos bobos. No estaban seguros de lo que les había asustado. Por lo que decidieron volver y comprobarlo.Lo vieron muy pronto, porque venía a su encuentro. Llevaba puestos unos pantalones negros, camisa blanca y tirantes oscuros. Sam dijo: “Intentaré tocarlo. De ese modo sabremos si es real”.Se acercó y escudriñó su rostro. Tenía unos ojos brillantes y maliciosos profundamente hundidos en su cabeza. Parecía un esqueleto. Ted echó una mirada y gritó, y de nuevo él y Sam corrieron, pero esta vez el esqueleto los siguió. Cuando llegaron a casa de Ted, permanecieron frente a la puerta y lo observaron. Se quedó un momento en el camino y luego desapareció.Un año más tarde Ted enfermó y murió. En sus últimos momentos, Sam se quedó con él todas las noches. La noche en que Ted murió, Sam dijo que su aspecto era exactamente igual al del esqueleto.',
+'Un hombre llamado Joseph Blackwell llegó a [....] en un viaje de negocios. Se hospedó en la gran casa que unos amigos poseían en las afueras de la ciudad. Esa noche pasaron un buen rato conversando y rememorando viejos tiempos. Pero cuando Blackwell fue a la cama, comenzó a dar vueltas y no era capaz de dormir.En un momento de la noche, oyó un coche llegar a la entrada de la casa. Se acercó a la ventana para ver quién podía arribar a una hora tan tardía. Bajo la luz de la luna vio un coche fúnebre de color negro lleno de gente. El conductor alzó la mirada hacia él. Cuando Blackwell vio su extraño y espantoso rostro, se estremeció. El conductor le dijo: “Hay sitio para uno más”. Entonces el conductor esperó uno o dos minutos, y se retiró.Por la mañana, Blackwell les contó a sus amigos lo que había pasado. “Estabas soñando”, dijeron ellos. “Eso debe haber sido”, repuso él, “pero no parecía un sueño”. Después del desayuno se marchó a la ciudad. Pasó el día en las oficinas de uno de los nuevos y altos edificios de la urbe.A última hora de la tarde, él estaba esperando un ascensor que lo llevara de vuelta a la calle. Pero cuando se detuvo en su piso, este se encontraba muy lleno. Uno de los pasajeros lo miró y le dijo: “Hay sitio para uno más”. Se trataba del conductor del coche fúnebre. “No, gracias”, dijo Blackwell. “Esperaré al siguiente”.Las puertas se cerraron y el ascensor empezó a bajar. Se oyeron voces y gritos, y un gran estruendo. El ascensor se había desplomado contra el fondo. Todas las personas que habían a bordo murieron.']
+const miedo2 = Math.floor(Math.random()*miedo.length)
+const miedo3 = miedo[miedo2]
+enviartexto(miedo3)
+break
+
+
+
 
 
 

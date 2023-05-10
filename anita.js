@@ -1259,6 +1259,17 @@ break
   ╰━━━━━━━━━━━──⊷
 
   ╭─────────────◆ 
+  ┃✯- ℝ𝔼𝕃𝔸𝕋𝕆𝕊 𝕐 𝔽ℝ𝔸𝕊𝔼𝕊
+  ┃ ✯ 𝕃𝔸𝕊 ℍ𝕀𝕊𝕋𝕆ℝ𝕀𝔸𝕊 𝕌ℕ ℙ𝕆ℚ𝕌𝕀𝕋𝕆 ℂ𝕌𝕋ℝ𝔼𝕊 
+  ┃ ✯ 𝔼𝕊 𝕋𝕌 𝔼𝕃𝔼ℂℂ𝕀𝕆ℕ
+  ┃ ✯╭──────────◆
+  ┃ ✯│${prefix} piropo
+  ┃ ✯│${prefix} frases o fraseromantica
+  ┃ ✯│${prefix} historia o terror
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+
+  ╭─────────────◆ 
   ┃✯- 𝕀𝕄𝔸𝔾𝔼ℕ𝔼𝕊
   ┃ ✯╭──────────◆
   ┃ ✯│${prefix} waifu
@@ -1418,7 +1429,7 @@ case 'piropo':
   enviartexto(piropo3)
   break
 
-case 'fraseromantica':
+case 'fraseromantica': case 'frases' : 
   const frase = ['Hace un año no sabía quién eras, y hoy no sabría cómo vivir sin ti.' , 'Tú eres mi meta, el camino que decidí tomar, la mujer de mi vida, mi vida sin más.' , 'Si lloras, te regalaré mis sonrisas. Si tienes frío, te regalaré mi calor.' , ' Si te duele, yo te curaré. Vida mía, siempre te protegeré.' , 'Por arte de magia, un día todos mis pensamientos se centraron en ti.' , 'Tumbémonos juntos, susurrémonos cosas lindas al oído, sonriamos cogidos de la mano, y todas las noches dormiré contigo.' , 
   'Pareces el brujo del tiempo, contigo pasa tan deprisa y sin ti tan lento…' , 'Con un beso tuyo puedo tocar las estrellas.' , ' No hay paisaje más hermoso que el que encuentro en la mirada de tus ojos.' , 'Tú me diste la luz, y mientras duerma contigo no le tendré miedo a la noche.' , ' Me cautivaste con tu sonrisa, me enamoraste con tu corazón.' , ' Tu voz es la sinfonía más bonita que he escuchado en toda mi vida.' , ' Sabrás que le amas porque hará que dejes de sufrir por el pasado, que vivas el presente y que dejes de preocuparte por el futuro.' ,' Saboreemos nuestros cuerpos, amémonos sin complejos, convirtamos esta historia, en un cuento de amor eterno.' , ' Tu amor nació en mi corazón, y ahora recorre mis venas llenándome de ilusión.' , ' Yo no fui quien escogió amarte, sino mi alma, y me dijo que te amaría eternamente.' , ' No tienes ni idea de cómo me tiemblan las piernas cada vez que me miras…' , 'i me dices «Te quiero», te regalo mi corazón entero.']
   const frase2 = Math.floor(Math.random()*frase.length)
@@ -1442,7 +1453,14 @@ const miedo3 = miedo[miedo2]
 enviartexto(miedo3)
 break
 
-
+case 'chistenegro': case 'humornegro':
+  const negro = ['- papá que es ¿el humor negro? +¿ves ése hombre sin brazos?. Dile que aplauda -pero papá soy ciego +exacto',
+'¿Por qué no tiran bombas a África? Porque no encuentran el blanco',
+'¿Qué hace un negro vomitando? Presumir de que comió',
+'¿Porqué los negros son zurds? Porque no tienen derechos',
+'Dos amigos se encuentran y le dice uno al otro: - Oye, ¿tu abuela es mecanica?. - No, ¿por qué?. - Porque la he visto en la autopista debajo de un camión.',
+'Cual es la diferencia entre albert einstein y el nene de 2 años? que tengo que albert einstein murio virgen',
+]
 
 
 

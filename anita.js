@@ -443,10 +443,11 @@ error: ".. Error, intente nuevamente.."
 switch(command){
 
 
-  case 'creador':
-    case  'dueño':
-                enviar ('Mi creador es kevin ')
-              break
+  case 'creador' :
+          const creador = ('ۣۜۜ͜͡𝐇𝐨𝐥𝐚ঔৣֳ᷌᷈͜͡ \n┃ ⛥│🤴ℕ𝕆𝕄𝔹ℝ𝔼 \n┃ ⛥│📔KEVIN OF\n┃ ⛥🤴ᩭ✎𝙽Ú𝙼𝙴𝚁𝙾 𝙳𝙴 𝙼𝙸 𝙲𝚁𝙴𝙰𝙳𝙾𝚁\n│ ⛥│📔ᩭ✎http://wa.me/573001382233\n ┃ ⛥ 𝔸𝕃𝔾𝕌ℕ 𝔼ℝℝ𝕆ℝ ℝ𝔼ℙ𝕆ℝ𝕋𝔸𝕃𝕆 ℂ𝕆ℕ 𝕄𝕀 ℂℝ𝔼𝔸𝔻𝕆ℝ \n│ ⛥│𝕋𝔼ℕ 𝔹𝕆ℕ𝕀𝕋𝕆 𝔻𝕀𝔸 ')
+  const creador1=
+  enviartexto(creador)
+          break
           
 
 
@@ -815,6 +816,19 @@ case 'antilink':
                   break
 
                   //stickers//
+
+
+                  case 'wolf':
+
+if(!q) throw `Use ${prefix} text`
+reply(mess.wait)
+teks1 = q.split("|")[0]
+teks2 = q.split("|")[1]
+maker.textpro("https://trevorestapi.onrender.com/api/textpro/wolf?text=trevo&text2=api&apikey=clover", [
+    `${teks1}`,`${teks2}`])
+  .then((data) => anita.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${global.botname}` }, { quoted: m }))
+  .catch((err) => console.log(err));
+   break
                  
 
   //NSFW
@@ -1548,6 +1562,19 @@ const negro2 = Math.floor(Math.random()*negro.length)
 const negro3 = negro[negro2]
 enviartexto(negro3)
 break
+
+
+case 'piropo' :
+const piro = ['"Me gustaría ser papel para poder envolver ese bombón.", "Eres como wifi sin contraseña, todo el mundo te busca", "Quién fuera bus para andar por las curvas de tu corazón.", "Quiero volar sin alas y salir de este universo, entrar en el tuyo y amarte en silencio.", "Quisiera ser mantequilla para derretirme en tu arepa.", "Si la belleza fuera pecado vos ya estarías en el infierno.", "Me Gustaría Ser Un Gato Para Pasar 7 Vidas A Tu Lado.", "Robar Está Mal Pero Un Beso De Tu Boca Sí Me Lo Robaría.", "Qué Hermoso Es El Cielo Cuando Está Claro Pero Más Hermoso Es El Amor Cuando Te Tengo A Mi Lado.", "Bonita, Camina Por La Sombra, El Sol Derrite Los Chocolates.", "Si Fuera Un Correo Electrónico Serías Mi Contraseña.", "Quisiera que fueses monte para darte machete", "Perdí mi número de teléfono ¿Me das el tuyo?", "¿Cómo te llamas para pedirte de regalo a Santa Claus?", " En el cielo hay muchas estrellas, pero la más brillante está en la Tierra y eres tú.", "¿Acaba de salir el sol o es la sonrisa que me regalas hoy?", "No es el ron ni la cerveza, eres tú quien se me ha subido a la cabeza", "Si hablamos de matemáticas eres la suma de todos mis deseos.", "Pareces Google porque tienes todo lo que yo busco.", "Mi café favorito, es el de tus ojos.", "Quiero ser photoshop para retocarte todo el cuerpo.", "Quisiera que fueras cereal, para cucharearte en las mañanas.", "Quien fuera hambre, para darte tres veces al día.']
+const piro2 = Math-floor(Math.random()*piro.length)
+const piro3 = piro[piro2]
+enviartexto(piro3)
+break
+
+
+
+
+
 
 
 

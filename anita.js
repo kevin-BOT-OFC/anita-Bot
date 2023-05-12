@@ -316,6 +316,7 @@ const sendGifButao = async (id, gif1, text1, desc1, but = [], vr) => { buttonMes
 anita.sendMessage(id, buttonMessage, {quoted: vr}) } 
 global.openai_key = 'sk-...4mT1'
 global.openai_org_id = 'org-fRxXA5On3KPd9xYQBmYW2h74'
+
 //*******************************************//
 
 
@@ -458,8 +459,7 @@ case 'agregar' :
     case 'unir' :
       if(args.length<0 ) return 
       enviar('👀✍𝔼𝕤𝕔𝕣𝕚𝕓𝕖 𝕖𝕝 𝕟𝕦𝕞𝕖𝕣𝕠 𝕕𝕖 𝕝𝕒 𝕡𝕖𝕣𝕤𝕠𝕟𝕒 𝕢𝕦𝕖 𝕕𝕖𝕤𝕖𝕒𝕤 𝕒𝕘𝕣𝕖𝕘𝕒𝕣 𝕤𝕠𝕪 𝕦𝕟 𝔹𝕆𝕋 𝕟𝕠 𝕒𝕕𝕚𝕧𝕚𝕟𝕠🔮')
-      if(!isGroupAdmins) return enviar ('lo siento mi king , pero no eres un administrador de los GODS')
-      if(!isBotGroupAdmins) return enviar(respuesta.botadmin)
+      if(!isOwner) return enviar(respuesta.dono)
       let pepe = info.quoted ? info.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
       await anita.groupParticipantsUpdate(from, [pepe] , 'add')
       break

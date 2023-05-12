@@ -316,7 +316,6 @@ const sendGifButao = async (id, gif1, text1, desc1, but = [], vr) => { buttonMes
 anita.sendMessage(id, buttonMessage, {quoted: vr}) } 
 global.openai_key = 'sk-...4mT1'
 global.openai_org_id = 'org-fRxXA5On3KPd9xYQBmYW2h74'
-const antiToxic = m.isGroup ? nttoxic.includes(from) : false
 //*******************************************//
 
 
@@ -1233,11 +1232,29 @@ break
   enviarvideos(good4,desc2)
   break
 
-  case 'audio': 
+  case 'admin': 
   const admin = fs.readFileSync('./archivos/media/admin.mp3')
   enviaraudios(admin)
   break
 
+  case 'onnichan': 
+  const onnichan = fs.readFileSync('./archivos/media/Onichan.mp3')
+  enviaraudios(onnichan)
+  break
+
+  case 'oh_tio': 
+  const oh_tio = fs.readFileSync('./archivos/media/oh_tio.mp3')
+  enviaraudios(oh_tio)
+  break
+
+  case 'pato': 
+  const pato = fs.readFileSync('./pato.mp3')
+  enviaraudios(pato)
+  break
+
+
+
+  
 
   case 'video2': 
   const good5 = fs.readFileSync('./archivos/fotos/ranita.mp4')
@@ -1245,8 +1262,8 @@ break
   break
 
   
-  case 'audio2' :
-    anita.sendMessage(from,{audio : fs.readFileSync('./archivos/fotos/uwu.mp3'), mimetype: 'audio,mp4'},
+  case 'pato2' :
+    anita.sendMessage(from,{audio : fs.readFileSync('./pato.mp3'), mimetype: 'audio,mp4'},
     {quoted : live})
     break
 

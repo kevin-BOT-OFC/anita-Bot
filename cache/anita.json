@@ -790,24 +790,26 @@
         {
           "senderKeyId": 126653401,
           "senderChainKey": {
-            "iteration": 7,
-            "seed": "lYWPWyU895BKBFPn2vbR14c53Di+VtcOTnGjXWmHDFA="
+            "iteration": 8,
+            "seed": "tFUqwdH4waK3WP8VJfcYyjxP3rj9KT97SBShoLXfO5w="
           },
           "senderSigningKey": {
             "public": "BRO2EOcxZQe6q6v5lt9VoUKmjbFuxQGjoyVCnd0a8jNG"
-          }
+          },
+          "senderMessageKeys": []
         }
       ],
       "120363150011593997@g.us::17028012570::0": [
         {
           "senderKeyId": 519154768,
           "senderChainKey": {
-            "iteration": 33,
-            "seed": "ozITPUxmefcn4GmmOB8VmlsS9Cf6VZlti1uM9YEcJmg="
+            "iteration": 34,
+            "seed": "u7X2wv9D4rWdJ1aByizk1mvDsJfGuqiY5X7zVl+Rkso="
           },
           "senderSigningKey": {
             "public": "BWOF4UHpehjjDnjTXcg09CeI910DanIAU8AchwEGw8pi"
-          }
+          },
+          "senderMessageKeys": []
         }
       ],
       "120363150011593997@g.us::573209693832::0": [

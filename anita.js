@@ -524,15 +524,33 @@ case 'hola':
   enviartexto(estasbien)
           break
 
-          case "playvideo":
-            reply("aguarde um minuto")
-            bla = await fetchJson(`https://trevorestapi.onrender.com/api/yt/playmp4?query=vmz%20baka&apikey=clover=${q}`) 
-            audbla = await getBuffer(bla.url)
-            anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
-             {quoted: live}).catch(e => {
-            reply("erro")
-            })
-            break    
+          case "playmp4":
+enviar("aguarde um minuto")
+bla = await fetchJson(`https://trevorestapi.onrender.com/api/yt/playmp4?query=vmz%20baka&apikey=clover`) 
+audbla = await getBuffer(bla.url)
+anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
+ {quoted: live}).catch(e => {
+enviar("error")
+})
+break   
+
+case "playmp3":
+  enviar("aguarde um minuto")
+  bla = await fetchJson(`hhttps://trevorestapi.onrender.com/api/yt/playmp3?query=vmz%20baka&apikey=clover`) 
+  audbla = await getBuffer(bla.url)
+  anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
+   {quoted: live}).catch(e => {
+  enviar("error")
+  })
+  break   
+
+  case "audio":		  
+  if (args.length < 1) return enviar('Escribe el nombre')
+  enviar(respuesta.espere)
+  playi = body.slice(7)
+  anu = await fetchJson(`https://trevorestapi.onrender.com/api/download/ytmp3?url=https://www.youtube.com/watch?v=7AlAYttGnAg&apikey=clover`)  
+   if (anu.error) return enviar(anu.error)
+   break
 
             case "ping":
 enviar(`🎭 velocidad de respuesta ${latensi.toFixed(4)} segundos `)
@@ -814,13 +832,812 @@ case 'antilink':
                   }
                   break
 
+
+//ＷＡＩＦＵＳ
+
+case 'yotsuba':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/yotsuba?apikey=clover')
+  templateMassage = {
+  image: {url:waifuddd.data.url,
+  quoted: info},
+  caption: 'yotsuba!',
+  footer: "ꪶ͓Ckev",
+  }
+  anita.sendMessage(from, templateMassage)
+  }
+  break
+
+  case 'shinomiya':{
+    enviar('Un momento porfavor')
+    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/shinomiya?apikey=clover')
+    templateMassage = {
+    image: {url:waifuddd.data.url,
+    quoted: info},
+    caption: 'shinomiya !',
+    footer: "ꪶ͓Ckev",
+    }
+    anita.sendMessage(from, templateMassage)
+    }
+    break
+
+    case 'yumeko':{
+      enviar('Un momento porfavor')
+      waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/yumeko?apikey=clover')
+      templateMassage = {
+      image: {url:waifuddd.data.url,
+      quoted: info},
+      caption: 'yumeko !',
+      footer: "ꪶ͓Ckev",
+      }
+      anita.sendMessage(from, templateMassage)
+      }
+      break
+
+      case 'tejina':{
+        enviar('Un momento porfavor')
+        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/tejina?apikey=clover')
+        templateMassage = {
+        image: {url:waifuddd.data.url,
+        quoted: info},
+        caption: 'tejina !',
+        footer: "ꪶ͓Ckev",
+        }
+        anita.sendMessage(from, templateMassage)
+        }
+        break
+
+        case 'chiho':{
+          enviar('Un momento porfavor')
+          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/chiho?apikey=clover')
+          templateMassage = {
+          image: {url:waifuddd.data.url,
+          quoted: info},
+          caption: 'chiho !',
+          footer: "ꪶ͓Ckev",
+          }
+          anita.sendMessage(from, templateMassage)
+          }
+          break
+
+
+          case 'boruto':{
+            enviar('Un momento porfavor')
+            waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/boruto?apikey=clover')
+            templateMassage = {
+            image: {url:waifuddd.data.url,
+            quoted: info},
+            caption: 'Por bruto digo Boruto !',
+            footer: "ꪶ͓Ckev",
+            }
+            anita.sendMessage(from, templateMassage)
+            }
+            break
+
+
+            case 'kaori':{
+              enviar('Un momento porfavor')
+              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/kaori?apikey=clover')
+              templateMassage = {
+              image: {url:waifuddd.data.url,
+              quoted: info},
+              caption: 'kaori !',
+              footer: "ꪶ͓Ckev",
+              }
+              anita.sendMessage(from, templateMassage)
+              }
+              break
+
+              case 'shizuka':{
+                enviar('Un momento porfavor')
+                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/shizuka?apikey=clover')
+                templateMassage = {
+                image: {url:waifuddd.data.url,
+                quoted: info},
+                caption: 'shizuk !',
+                footer: "ꪶ͓Ckev",
+                }
+                anita.sendMessage(from, templateMassage)
+                }
+                break
+
+
+                case 'kaga':{
+                  enviar('Un momento porfavor')
+                  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/kaga?apikey=clover')
+                  templateMassage = {
+                  image: {url:waifuddd.data.url,
+                  quoted: info},
+                  caption: ' kaga !',
+                  footer: "ꪶ͓Ckev",
+                  }
+                  anita.sendMessage(from, templateMassage)
+                  }
+                  break
+
+
+                  case 'kotori':{
+                    enviar('Un momento porfavor')
+                    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/kotori?apikey=clover')
+                    templateMassage = {
+                    image: {url:waifuddd.data.url,
+                    quoted: info},
+                    caption: 'Kotori !',
+                    footer: "ꪶ͓Ckev",
+                    }
+                    anita.sendMessage(from, templateMassage)
+                    }
+                    break
+
+
+                    case 'mikasa':{
+                      enviar('Un momento porfavor')
+                      waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/mikasa?apikey=clover')
+                      templateMassage = {
+                      image: {url:waifuddd.data.url,
+                      quoted: info},
+                      caption: 'mikasita !',
+                      footer: "ꪶ͓Ckev",
+                      }
+                      anita.sendMessage(from, templateMassage)
+                      }
+                      break
+
+
+                      case 'akiyama':{
+                        enviar('Un momento porfavor')
+                        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/akiyama?apikey=clover')
+                        templateMassage = {
+                        image: {url:waifuddd.data.url,
+                        quoted: info},
+                        caption: 'akiyama !',
+                        footer: "ꪶ͓Ckev",
+                        }
+                        anita.sendMessage(from, templateMassage)
+                        }
+                        break
+
+                        case 'gremory':{
+                          enviar('Un momento porfavor')
+                          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/gremory?apikey=clover')
+                          templateMassage = {
+                          image: {url:waifuddd.data.url,
+                          quoted: info},
+                          caption: 'Gremory !',
+                          footer: "ꪶ͓Ckev",
+                          }
+                          anita.sendMessage(from, templateMassage)
+                          }
+                          break
+
+                          case 'isuzu':{
+                            enviar('Un momento porfavor')
+                            waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/isuzu?apikey=clover')
+                            templateMassage = {
+                            image: {url:waifuddd.data.url,
+                            quoted: info},
+                            caption: 'isu !',
+                            footer: "ꪶ͓Ckev",
+                            }
+                            anita.sendMessage(from, templateMassage)
+                            }
+                            break
+
+                            case 'shina':{
+                              enviar('Un momento porfavor')
+                              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/shina?apikey=clover')
+                              templateMassage = {
+                              image: {url:waifuddd.data.url,
+                              quoted: info},
+                              caption: 'shina !',
+                              footer: "ꪶ͓Ckev",
+                              }
+                              anita.sendMessage(from, templateMassage)
+                              }
+                              break
+
+                              case 'kagura':{
+                                enviar('Un momento porfavor')
+                                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/kagura?apikey=clover')
+                                templateMassage = {
+                                image: {url:waifuddd.data.url,
+                                quoted: info},
+                                caption: ' kagura!',
+                                footer: "ꪶ͓Ckev",
+                                }
+                                anita.sendMessage(from, templateMassage)
+                                }
+                                break
+
+                                case 'shinka':{
+                                  enviar('Un momento porfavor')
+                                  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/shinka?apikey=clover')
+                                  templateMassage = {
+                                  image: {url:waifuddd.data.url,
+                                  quoted: info},
+                                  caption: 'shinka!',
+                                  footer: "ꪶ͓Ckev",
+                                  }
+                                  anita.sendMessage(from, templateMassage)
+                                  }
+                                  break
+
+                                  case 'eba':{
+                                    enviar('Un momento porfavor')
+                                    waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/eba?apikey=clover ')
+                                    templateMassage = {
+                                    image: {url:waifuddd.data.url,
+                                    quoted: info},
+                                    caption: 'Eba !',
+                                    footer: "ꪶ͓Ckev",
+                                    }
+                                    anita.sendMessage(from, templateMassage)
+                                    }
+                                    break
+
+                                    case 'elaina':{
+                                      enviar('Un momento porfavor')
+                                      waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/elaina?apikey=clover ')
+                                      templateMassage = {
+                                      image: {url:waifuddd.data.url,
+                                      quoted: info},
+                                      caption: ' elaina!',
+                                      footer: "ꪶ͓Ckev",
+                                      }
+                                      anita.sendMessage(from, templateMassage)
+                                      }
+                                      break
+
+                                      case 'yuri':{
+                                         enviar('Un momento porfavor')
+                                        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/yuri?apikey=clover ')
+                                        templateMassage = {
+                                        image: {url:waifuddd.data.url,
+                                        quoted: info},
+                                        caption: 'Yuri !',
+                                        footer: "ꪶ͓Ckev",
+                                        }
+                                        anita.sendMessage(from, templateMassage)
+                                        }
+                                        break
+
+                                        case 'erza':{
+                                          enviar('Un momento porfavor')
+                                          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/erza?apikey=clover ')
+                                          templateMassage = {
+                                          image: {url:waifuddd.data.url,
+                                          quoted: info},
+                                          caption: 'Erza !',
+                                          footer: "ꪶ͓Ckev",
+                                          }
+                                          anita.sendMessage(from, templateMassage)
+                                          }
+                                          break
+
+                                          case 'hinata':{
+                                            enviar('Un momento porfavor')
+                                            waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/hinata?apikey=clover')
+                                            templateMassage = {
+                                            image: {url:waifuddd.data.url,
+                                            quoted: info},
+                                            caption: 'Hinata !',
+                                            footer: "ꪶ͓Ckev",
+                                            }
+                                            anita.sendMessage(from, templateMassage)
+                                            }
+                                            break
+
+                                            case 'minato':{
+                                              enviar('Un momento porfavor')
+                                              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/minato?apikey=clover ')
+                                              templateMassage = {
+                                              image: {url:waifuddd.data.url,
+                                              quoted: info},
+                                              caption: ' Minato!',
+                                              footer: "ꪶ͓Ckev",
+                                              }
+                                              anita.sendMessage(from, templateMassage)
+                                              }
+                                              break 
+                                              
+                                              case 'naruto':{
+                                                enviar('Un momento porfavor')
+                                                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/naruto?apikey=clover ')
+                                                templateMassage = {
+                                                image: {url:waifuddd.data.url,
+                                                quoted: info},
+                                                caption: 'Naruto !',
+                                                footer: "ꪶ͓Ckev",
+                                                }
+                                                anita.sendMessage(from, templateMassage)
+                                                }
+                                                break                                        
+
+
+case 'sagiri':{
+  enviar('Un momento porfavor')
+ waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/sagiri?apikey=clover ')
+ templateMassage = {
+image: {url:waifuddd.data.url,
+quoted: info},
+ caption: 'Sagirii !',
+footer: "ꪶ͓Ckev",
+}
+anita.sendMessage(from, templateMassage)
+}
+break
+
+case 'nezuko':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/nezuko?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Nezu !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'rize':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/rize?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Rize !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'anna':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/ana?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Anna !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'deidara':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/deidara?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Deidara !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'yuki':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/yuki?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Yuki !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+
+ case 'ana':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/ana?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'no c we !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+
+ case 'asuna':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/asuna?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Azuna !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'ayuzawa':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/ayuzawa?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Ayuzawa !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'chitoge':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/chitoge?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'chitoge !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'emilia':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/emilia?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Emiria !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'hestia':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/hestia?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Hestia !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'inori':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/inori?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Inori !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'itachi':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/itachi?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Itachi !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'madara':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/madara?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Madera digo Madara\nNo te enojes cristal !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'sakura':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/sakura?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Sakura !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'sasuke':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/sasuke?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Sasuke !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'tsunade':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/tsunade?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'uff esas tetas\n Tsunade !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'onepiece':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/onepiece?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'onepiece !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+ case 'mobil':{
+  enviar('Un momento porfavor')
+  waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/mobil?apikey=clover ')
+  templateMassage = {
+ image: {url:waifuddd.data.url,
+ quoted: info},
+  caption: 'Mobil?? !',
+ footer: "ꪶ͓Ckev",
+ }
+ anita.sendMessage(from, templateMassage)
+ }
+ break
+
+                                    case 'kaneki':{
+                                      enviar('Un momento porfavor')
+                                      waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/keneki?apikey=clover')
+                                      templateMassage = {
+                                      image: {url:waifuddd.data.url,
+                                      quoted: info},
+                                      caption: 'Kaneki !',
+                                      footer: "ꪶ͓Ckev",
+                                      }
+                                      anita.sendMessage(from, templateMassage)
+                                      }
+                                      break
+
+                                      case 'megumin':{
+                                        enviar('Un momento porfavor')
+                                        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/megumin?apikey=clover')
+                                        templateMassage = {
+                                        image: {url:waifuddd.data.url,
+                                        quoted: info},
+                                        caption: 'exploosiooón !',
+                                        footer: "ꪶ͓Ckev",
+                                        }
+                                        anita.sendMessage(from, templateMassage)
+                                        }
+                                        break
+
+                                        case 'touka':{
+                                          enviar('Un momento porfavor')
+                                          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/toukachan?apikey=clover')
+                                          templateMassage = {
+                                          image: {url:waifuddd.data.url,
+                                          quoted: info},
+                                          caption: 'Toukachan !',
+                                          footer: "ꪶ͓Ckev",
+                                          }
+                                          anita.sendMessage(from, templateMassage)
+                                          }
+                                          break
+
+
+
+                                      case 'akira':{
+                                        enviar('Un momento porfavor')
+                                        waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/akira?apikey=clover ')
+                                        templateMassage = {
+                                        image: {url:waifuddd.data.url,
+                                        quoted: info},
+                                        caption: 'Akira !',
+                                        footer: "ꪶ͓Ckev",
+                                        }
+                                        anita.sendMessage(from, templateMassage)
+                                        }
+                                        break
+
+
+                                        case 'itori':{
+                                          enviar('Un momento porfavor')
+                                          waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/itori?apikey=clover ')
+                                          templateMassage = {
+                                          image: {url:waifuddd.data.url,
+                                          quoted: info},
+                                          caption: 'Itori !',
+                                          footer: "ꪶ͓Ckev",
+                                          }
+                                          anita.sendMessage(from, templateMassage)
+                                          }
+                                          break
+
+
+                                          case 'kurumi':{
+                                            enviar('Un momento porfavor')
+                                            waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/kurumi?apikey=clover ')
+                                            templateMassage = {
+                                            image: {url:waifuddd.data.url,
+                                            quoted: info},
+                                            caption: 'Kurumi !',
+                                            footer: "ꪶ͓Ckev",
+                                            }
+                                            anita.sendMessage(from, templateMassage)
+                                            }
+                                            break
+
+
+                                            case 'miku':{
+                                              enviar('Un momento porfavor')
+                                              waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/miku?apikey=clover ')
+                                              templateMassage = {
+                                              image: {url:waifuddd.data.url,
+                                              quoted: info},
+                                              caption: 'Mikuu !',
+                                              footer: "ꪶ͓Ckev",
+                                              }
+                                              anita.sendMessage(from, templateMassage)
+                                              }
+                                              break
+
+                                              case 'pokemon':{
+                                                 enviar('Un momento porfavor')
+                                                waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/pokemon?apikey=clover')
+                                                templateMassage = {
+                                                image: {url:waifuddd.data.url,
+                                                quoted: info},
+                                                caption: 'Pokemon !',
+                                                footer: "ꪶ͓Ckev",
+                                                }
+                                                anita.sendMessage(from, templateMassage)
+                                                }
+                                                break
+
+                                                case 'cosplay':{
+                                                  enviar('Un momento porfavor')
+                                                 waifuddd = await axios.get('https://trevorestapi.onrender.com/api/anime/cosplay?apikey=clover')
+                                                 templateMassage = {
+                                                 image: {url:waifuddd.data.url,
+                                                 quoted: info},
+                                                 caption: 'mm !',
+                                                 footer: "ꪶ͓Ckev",
+                                                 }
+                                                 anita.sendMessage(from, templateMassage)
+                                                 }
+                                                 break
+
+                                                
+
+
+                                                case 'menuanime':  case 'anime':
+                                                  enviar('Espera el menu se esta enviando')
+                                                const menu = fs.readFileSync('./archivos/fotos/menuanime.jpg')
+                                                
+                                                const anime = `
+  ╭─────────────◆ 
+  ┃ ✯〘𝒜𝒩𝐼𝒯𝒜-𝐵𝒪𝒯〙
+  ┃ ✯╭──────────◆
+  ┃ ✯│▢ʜᴏʟᴀ:${pushname}
+  ┃ ✯│▢ᴏᴡɴᴇʀ:ᴏғᴄ➟kev
+  ┃ ✯│▢ɴᴜᴍᴇʀᴏ:Wa.me/573001382233
+  ┃ ✯│▢ғᴇᴄʜᴀ:${colom}, ${hora}
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  
+  ╭─────────────◆ 
+  ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
+  ┃ ✯╭──────────◆
+  ┃ ✯│▢ ℙ𝕆ℝ 𝔽𝔸𝕍𝕆ℝ ℕ𝕆 𝕊ℙ𝔸𝕄𝔼𝔸ℝ ℂ𝕆𝕄𝔸ℕ𝔻𝕆𝕊
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷
+  ╭─────────────◆ 
+  ┃ ✯-𝕄𝔼ℕ𝕌 𝔸ℕ𝕀𝕄𝔼
+  ┃ ✯- ᴇꜱᴄʀɪʙᴇ ᴛᴀʟ ᴄᴏᴍᴏ ᴇꜱᴛᴀ
+  ┃ ✯╭──────────◆
+  ┃ ✯│${prefix} cosplay
+  ┃ ✯│${prefix} yotsuna
+  ┃ ✯│${prefix} shinomiya
+  ┃ ✯│${prefix} yumeko
+  ┃ ✯│${prefix} tejina
+  ┃ ✯│${prefix} chiho
+  ┃ ✯│${prefix} boruto
+  ┃ ✯│${prefix} kaori
+  ┃ ✯│${prefix} shizuka  
+  ┃ ✯│${prefix} kaga
+  ┃ ✯│${prefix} katori
+  ┃ ✯│${prefix} mikasa
+  ┃ ✯│${prefix} akiyama
+  ┃ ✯│${prefix} gremory
+  ┃ ✯│${prefix} isuzu
+  ┃ ✯│${prefix} shina
+  ┃ ✯│${prefix} kagura
+  ┃ ✯│${prefix} shinka
+  ┃ ✯│${prefix} eba
+  ┃ ✯│${prefix} elaina
+  ┃ ✯│${prefix} yuri
+  ┃ ✯│${prefix} erza
+  ┃ ✯│${prefix} hinata
+  ┃ ✯│${prefix} minato
+  ┃ ✯│${prefix} naruto
+  ┃ ✯│${prefix} sagiri
+  ┃ ✯│${prefix} nezuko
+  ┃ ✯│${prefix} rize
+  ┃ ✯│${prefix} anna
+  ┃ ✯│${prefix} deidara
+  ┃ ✯│${prefix} yuki
+  ┃ ✯│${prefix} anna
+  ┃ ✯│${prefix} asuna
+  ┃ ✯│${prefix} ayuzawa
+  ┃ ✯│${prefix} chitoge
+  ┃ ✯│${prefix} emilia
+  ┃ ✯│${prefix} hestia
+  ┃ ✯│${prefix} inori
+  ┃ ✯│${prefix} itachi
+  ┃ ✯│${prefix} madara
+  ┃ ✯│${prefix} sakura
+  ┃ ✯│${prefix} sasuke
+  ┃ ✯│${prefix} tsunade
+  ┃ ✯│${prefix} onepiece
+  ┃ ✯│${prefix} mobil
+  ┃ ✯│${prefix} kaneki
+  ┃ ✯│${prefix} megumin
+  ┃ ✯│${prefix} toukachan
+  ┃ ✯│${prefix} akira
+  ┃ ✯│${prefix} itori
+  ┃ ✯│${prefix} kurimi
+  ┃ ✯│${prefix} miku
+  ┃ ✯│${prefix} pokemon
+  ┃ ✯╰───────────◆
+  ╰━━━━━━━━━━━──⊷ 
+  ╭─────────────◆ 
+  ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
+  ╰━━━━━━━━━━━──⊷
+  
+  `
+                                              enviarimagencap(menu,anime)
+                                              break
+
+                                          
+
                   //stickers//
 
 
                   case 'wolf':
 
 if(!q) throw `Use ${prefix} text`
-reply(mess.wait)
+enviar(mess.wait)
 teks1 = q.split("|")[0]
 teks2 = q.split("|")[1]
 maker.textpro("https://trevorestapi.onrender.com/api/textpro/wolf?text=trevo&text2=api&apikey=clover", [
@@ -1283,6 +2100,7 @@ break
 
 
       case 'menu': 
+      enviar('Menu cargando, espera porfavor')
   const good3 = fs.readFileSync('./archivos/fotos/menu.jpg')
   
 
@@ -1309,6 +2127,7 @@ break
   ┃✯----Aɴɪᴛᴀ-Bᴏᴛ----⦿
   ┃ ✯╭──────────◆
   ┃ ✯│▢𝕄𝔼ℕ𝕌
+  ┃ ✯│▢𝕄𝔼ℕ𝕌 𝔸ℕ𝕀𝕄𝔼 (.menuanime)
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
   ╭─────────────◆ 
@@ -1320,6 +2139,8 @@ break
   ┃ ✯│▢${prefix} salir
   ┃ ✯│▢${prefix} ping
   ┃ ✯│▢${prefix} creador
+  ┃ ✯│▢${prefix} playmp4
+  ┃ ✯│▢${prefix} playmp3
   ┃ ✯╰───────────◆
   ╰━━━━━━━━━━━──⊷
 

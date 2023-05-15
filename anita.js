@@ -91,6 +91,36 @@ const gis = require('g-i-s');
 const imageToBase64 = require('image-to-base64');
 
 
+const { createBot, createProvider, createFlow, addKeyword } = require('@bot-whatsapp/bot')
+const QRPortalWeb = require('@bot-whatsapp/portal')
+const BaileysProvider = require('@bot-whatsapp/provider/baileys')
+const MockAdapter = require('@bot-whatsapp/database/mock')
+const CHATGPT = require('./chatgpt')
+
+const flowChatGPT = addKeyword('ia')
+    .addAnswer('Preguntale algo a la IA',{capture:true}, async (ctx, {flowDynamic}) => {
+        var message = ctx.body;
+      await CHATGPT.runCompletion(message).then(result => {
+        return flowDynamic(result)
+      });       
+    })
+
+
+const main = async () => {
+    const adapterDB = new MockAdapter()
+    const adapterFlow = createFlow([flowChatGPT])
+    const adapterProvider = createProvider(BaileysProvider)
+
+    createBot({
+        flow: adapterFlow,
+        provider: adapterProvider,
+        database: adapterDB,
+    })
+
+    QRPortalWeb()
+}
+
+main()
 
 // DATA E HORA //
 const moment = require("moment-timezone")
@@ -219,6 +249,15 @@ await axios({method: "get", url, headers: {"DNT": 1, "Upgrade-Insecure-Request":
 resolve(res.data)
 }).catch(reject)
 })
+
+const isUrl = (url) => {
+  return url.match(
+    new RegExp(
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%+.~#?&/=]*)/,
+      "gi"
+    )
+  );
+};
 //***************[ FUNCIONES ]***************//
 const info = m.messages[0]
   if (!info.message) return 
@@ -315,7 +354,16 @@ anita.sendMessage(id, templateMessage, {quoted: vr}) }
 const sendGifButao = async (id, gif1, text1, desc1, but = [], vr) => { buttonMessage = { video: {url: gif1}, caption: text1, gifPlayback: true, footerText: desc1, buttons: but, headerType: 4 }
 anita.sendMessage(id, buttonMessage, {quoted: vr}) } 
 global.openai_key = 'sk-...4mT1'
-global.openai_org_id = 'org-fRxXA5On3KPd9xYQBmYW2h74'
+global.openai_org_id = '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'
+const sleep = async (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+module.exports = {
+sleep,
+
+}
 
 //*******************************************//
 
@@ -426,7 +474,8 @@ grupos: ".. Este comando es para grupos.. ",
 privado: ".. Este comando es para chats.. ",
 admin: " ... Este comando es solo para admins..",
 botadmin: " .. Este comando funciona si y solo si, el bot es admin ",
-error: ".. Error, intente nuevamente.."
+error: ".. Error, intente nuevamente..",
+Iv: "Link inválido :v"
 }
 
 
@@ -538,10 +587,11 @@ case "playmp3":
   enviar("aguarde um minuto")
   bla = await fetchJson(`hhttps://trevorestapi.onrender.com/api/yt/playmp3?query=vmz%20baka&apikey=clover`) 
   audbla = await getBuffer(bla.url)
-  anita.sendMessage(from, {video: audbla, mimetype: "video/mp4"},
+  anita.sendMessage(from, {video: audbla, mimetype: "audio/mp4"},
    {quoted: live}).catch(e => {
   enviar("error")
   })
+  
   break   
 
   case "audio":		  
@@ -624,6 +674,74 @@ break
               ╰━━━━━━━━━━━──⊷
               `)
               break
+
+              case "inspect":
+                try {
+                  if (!isUrl(args[0]) && !args[0].includes("whatsapp.com"))
+                    return enviar(respuesta.Iv);
+                  if (!q) return enviar("Falta el link de un grupo");
+                  cos = args[0];
+                  var net = cos.split("https://chat.whatsapp.com/")[1];
+                  if (!net) return enviar("asegúrese de que sea un enlace https://whatsapp.com/");
+                  jids = [];
+                  let {
+                    id,
+                    owner,
+                    subject,
+                    subjectOwner,
+                    desc,
+                    descId,
+                    participants,
+                    size,
+                    descOwner,
+                    descTime,
+                    creation,
+                  } = await cnf.query({
+                    json: ["query", "invite", net],
+                    expect200: true,
+                  });
+                  let par = `*Id* : ${id}
+        ${owner ? `*Creador* : @${owner.split("@")[0]}` : "*Creador* : -"}
+        *Nombre de el grupo* : ${subject}
+        *Fecha de creación de el grupo : ${formatDate(creation * 1000)}
+        *Número de miembros* : ${size}
+        ${desc ? `*Desc* : ${desc}` : "*Desc *: no hay"}
+        *Id desc* : ${descId}
+        ${
+          descOwner
+            ? `*Desc modificado por* : @${descOwner.split("@")[0]}`
+            : "*Descripción modificada by* : -"
+        }\n*Datos* : ${
+                    descTime ? `${formatDate(descTime * 1000)}` : "-"
+                  }\n\n*Saved contacts*\n`;
+                  for (let y of participants) {
+                    par += `> @${y.id.split("@")[0]}\n*Admin* : ${
+                      y.isAdmin ? "Yes" : "No"
+                    }\n`;
+                    jids.push(`${y.id.replace(/@c.us/g, "@s.whatsapp.net")}`);
+                  }
+                  jids.push(
+                    `${owner ? `${owner.replace(/@c.us/g, "@s.whatsapp.net")}` : "-"}`
+                  );
+                  jids.push(
+                    `${
+                      descOwner
+                        ? `${descOwner.replace(/@c.us/g, "@s.whatsapp.net")}`
+                        : "-"
+                    }`
+                  );
+                  cnf.sendMessage(from, par, text, {
+                    quoted: mek,
+                    contextInfo: { mentionedJid: jids },
+                  });
+                } catch {
+                  enviar("Link inválido");
+                }
+                break
+
+
+
+
 
               case "gplink":
 if (!isGroup) return enviar(respuesta.grupos)
@@ -1635,17 +1753,28 @@ case 'nezuko':{
 
 
                   case 'wolf':
-
-if(!q) throw `Use ${prefix} text`
-enviar(mess.wait)
-teks1 = q.split("|")[0]
-teks2 = q.split("|")[1]
-maker.textpro("https://trevorestapi.onrender.com/api/textpro/wolf?text=trevo&text2=api&apikey=clover", [
-    `${teks1}`,`${teks2}`])
-  .then((data) => anita.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${global.botname}` }, { quoted: m }))
-  .catch((err) => console.log(err));
-   break
+                    if (args.length < 1) return enviar(`[  ×  ] Ejemplo :\n*${prefix}kev*`)
+                    F = body.slice(6)
+                    enviar(respuesta.espere)
+                    anu = await getBuffer(`https://trevorestapi.onrender.com/api/textpro/wolf?text=trevo&text2=api&apikey=clover`)
+                    anita.sendMessage(from, anu, image, {thumbnail: Buffer.alloc(0),caption: `Listo`, quoted: mek})
+                    break
                  
+                    case 'neon': 
+					makell = args.join(" ")
+					enviar(respuestawait)
+					anu = await fetchJson(`https://api-xchillds.herokuapp.com/api/textmaker/metallic?text=&theme=neon&apikey=`)
+					buffer1 = await getBuffer(anu.result.url)
+					cnf.sendMessage(from, buffer1, image, {quoted: mek, thumbnail: fs.readFileSync('./cnf.jpg')})
+					break
+
+
+                    case 'reiniciar':
+if (!isOwner) return enviar(respuesta.dono)
+enviar(`Reiniciando...`)
+await sleep(2000)
+process.exit()
+break
 
   //NSFW
   case 'lolis':
